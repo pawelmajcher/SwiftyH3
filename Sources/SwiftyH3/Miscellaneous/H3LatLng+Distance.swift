@@ -2,7 +2,7 @@
 import Foundation
 import Ch3
 
-extension H3LatLng {
+public extension H3LatLng {
     func distance(to destination: H3LatLng) -> Measurement<UnitLength> {
         let distanceM: Double = withUnsafePointer(to: self.cLatLng) { pOrigin in
             withUnsafePointer(to: destination.cLatLng) { pDestination in

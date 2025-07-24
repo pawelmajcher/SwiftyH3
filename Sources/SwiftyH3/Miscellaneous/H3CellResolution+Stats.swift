@@ -2,7 +2,7 @@
 import Foundation
 import Ch3
 
-extension H3CellResolution {
+public extension H3CellResolution {
     var averageHexagonArea: Measurement<UnitArea> {
         get throws {
             var areaM2: Double = 0

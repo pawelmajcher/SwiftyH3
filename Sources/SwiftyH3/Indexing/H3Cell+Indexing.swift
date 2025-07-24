@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3Cell {
+public extension H3Cell {
     var center: H3LatLng {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }

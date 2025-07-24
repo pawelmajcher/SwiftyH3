@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3Cell {
+public extension H3Cell {
     func isNeighbor(of anotherCell: H3Cell) throws -> Bool {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         guard anotherCell.isValid else { throw SwiftyH3Error.invalidInput }

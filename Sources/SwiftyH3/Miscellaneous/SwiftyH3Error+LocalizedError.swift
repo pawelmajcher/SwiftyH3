@@ -13,7 +13,7 @@ extension SwiftyH3Error {
 }
 
 extension SwiftyH3Error: LocalizedError {
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
             case let .H3Error(errorCode): 
                 return SwiftyH3Error.describeH3Error(errorCode: errorCode)

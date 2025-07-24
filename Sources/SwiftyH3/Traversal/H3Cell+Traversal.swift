@@ -2,7 +2,7 @@
 import Ch3
 
 extension H3Cell {
-    func gridDistance(to destination: H3Cell) throws -> Int64 {
+    internal func gridDistance(to destination: H3Cell) throws -> Int64 {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         guard destination.isValid else { throw SwiftyH3Error.invalidInput }
 
@@ -15,7 +15,7 @@ extension H3Cell {
 }
 
 extension H3Cell {
-    static func maxGridRingSize(distance: Int32) throws -> Int64 {
+    internal static func maxGridRingSize(distance: Int32) throws -> Int64 {
         var ringSize: Int64 = 0
         let h3error = Ch3.maxGridRingSize(distance, &ringSize)
 
@@ -25,7 +25,7 @@ extension H3Cell {
         return ringSize
     }
 
-    static func maxGridDiskSize(distance: Int32) throws -> Int64 {
+    internal static func maxGridDiskSize(distance: Int32) throws -> Int64 {
         var diskSize: Int64 = 0
         let h3error = Ch3.maxGridDiskSize(distance, &diskSize)
 
@@ -37,7 +37,7 @@ extension H3Cell {
 }
 
 extension H3Cell {
-    func gridRing(distance: Int32) throws -> [H3Cell] {
+    public func gridRing(distance: Int32) throws -> [H3Cell] {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
         let maxRingSize = try H3Cell.maxGridRingSize(distance: distance)
@@ -51,7 +51,7 @@ extension H3Cell {
         return indexArray.filter { h3index in h3index != 0 }.map { h3index in H3Cell(h3index) }
     }
 
-    func gridDisk(distance: Int32) throws -> [H3Cell] {
+    public func gridDisk(distance: Int32) throws -> [H3Cell] {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
         let maxDiskSize = try H3Cell.maxGridDiskSize(distance: distance)
@@ -67,7 +67,7 @@ extension H3Cell {
 }
 
 extension H3Cell {
-    func gridPathCellsSize(to destination: H3Cell) throws -> Int64 {
+    internal func gridPathCellsSize(to destination: H3Cell) throws -> Int64 {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
         var pathSize: Int64 = 0
@@ -78,7 +78,7 @@ extension H3Cell {
         return pathSize
     }
 
-    func gridPathCells(to destination: H3Cell) throws -> [H3Cell] {
+    public func gridPathCells(to destination: H3Cell) throws -> [H3Cell] {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
         let pathSize = try self.gridPathCellsSize(to: destination)

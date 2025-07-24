@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3LatLng {
+public extension H3LatLng {
     func cell(at resolution: H3CellResolution) throws -> H3Cell {
         var cLatLng = Ch3.LatLng(from: self)
         var cellIndex: UInt64 = 0

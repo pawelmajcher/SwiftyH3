@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3Vertex {
+public extension H3Vertex {
     var latLng: H3LatLng {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }

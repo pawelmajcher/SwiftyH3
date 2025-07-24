@@ -2,7 +2,7 @@
 import Foundation
 import Ch3
 
-extension H3Cell {
+public extension H3Cell {
     var area: Measurement<UnitArea> {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }

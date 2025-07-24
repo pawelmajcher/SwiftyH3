@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3DirectedEdge {
+public extension H3DirectedEdge {
     var boundary: [H3LatLng] {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }

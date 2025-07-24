@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3Cell {
+public extension H3Cell {
     static var res0Cells: [H3Cell] {
         get throws {
             let res0CellCount = 122

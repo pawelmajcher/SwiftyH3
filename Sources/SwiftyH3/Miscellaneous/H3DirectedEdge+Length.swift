@@ -2,7 +2,7 @@
 import Foundation
 import Ch3
 
-extension H3DirectedEdge {
+public extension H3DirectedEdge {
     var length: Measurement<UnitLength> {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }

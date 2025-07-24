@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension [H3Cell] {
+public extension [H3Cell] {
     var compacted: [H3Cell] {
         get throws {
             guard self.allSatisfy({ $0.isValid }) else { throw SwiftyH3Error.invalidInput }
@@ -36,7 +36,7 @@ extension [H3Cell] {
         return uncompactedArraySize
     }
 
-    func uncompacted(at resolution: H3CellResolution) throws -> [H3Cell] {
+    public func uncompacted(at resolution: H3CellResolution) throws -> [H3Cell] {
         guard self.allSatisfy({ $0.isValid }) else { throw SwiftyH3Error.invalidInput }
 
         let maxSize = try self.uncompactedArraySize(at: resolution)

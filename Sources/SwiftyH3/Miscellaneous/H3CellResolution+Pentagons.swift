@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3CellResolution {
+public extension H3CellResolution {
     var pentagons: [H3Cell] {
         get throws {
             let pentagonCount = 12

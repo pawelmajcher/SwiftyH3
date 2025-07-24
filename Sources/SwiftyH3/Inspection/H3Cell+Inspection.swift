@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3Cell {
+public extension H3Cell {
     var isValid: Bool {
         return Ch3.isValidCell(self.id) != 0
     }

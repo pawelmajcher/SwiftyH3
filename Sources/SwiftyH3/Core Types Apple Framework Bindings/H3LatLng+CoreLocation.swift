@@ -3,7 +3,7 @@
 
 import CoreLocation
 
-extension H3LatLng {
+public extension H3LatLng {
     init(from coordinates: CLLocationCoordinate2D) {
         self.init(latitudeDegs: coordinates.latitude, longitudeDegs: coordinates.longitude)
     }
@@ -11,7 +11,7 @@ extension H3LatLng {
     var coordinates: CLLocationCoordinate2D { CLLocationCoordinate2D(from: self) }
 }
 
-extension CLLocationCoordinate2D {
+public extension CLLocationCoordinate2D {
     init(from h3latlng: H3LatLng) {
         self.init(latitude: h3latlng.latitudeDegs, longitude: h3latlng.longitudeDegs)
     }

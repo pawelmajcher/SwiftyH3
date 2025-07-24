@@ -2,7 +2,7 @@
 import Ch3
 
 extension H3Polygon {
-    func maxCellsSize(at resolution: H3CellResolution) throws -> Int64 {
+    internal func maxCellsSize(at resolution: H3CellResolution) throws -> Int64 {
         try self.withGeoPolygon { geoPolygon in
             try withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
                 var size: Int64 = 0
@@ -16,7 +16,7 @@ extension H3Polygon {
         }
     }
 
-    func maxCellsSizeExperimental(at resolution: H3CellResolution, for containmentType: H3CellContainmentType) throws -> Int64 {
+    internal func maxCellsSizeExperimental(at resolution: H3CellResolution, for containmentType: H3CellContainmentType) throws -> Int64 {
         try self.withGeoPolygon { geoPolygon in
             try withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
                 var size: Int64 = 0
@@ -35,7 +35,7 @@ extension H3Polygon {
         }
     }
 
-    func cells(at resolution: H3CellResolution) throws -> [H3Cell] {
+    public func cells(at resolution: H3CellResolution) throws -> [H3Cell] {
         let maxSize = try self.maxCellsSize(at: resolution)
 
         var indexArray = Array<UInt64>(repeating: 0, count: Int(maxSize))
@@ -57,7 +57,7 @@ extension H3Polygon {
         return indexArray.filter { h3index in h3index != 0 }.map { h3index in H3Cell(h3index) }
     }
 
-    func cellsExperimental(at resolution: H3CellResolution, for containmentType: H3CellContainmentType) throws -> [H3Cell] {
+    public func cellsExperimental(at resolution: H3CellResolution, for containmentType: H3CellContainmentType) throws -> [H3Cell] {
         let maxSize = try self.maxCellsSizeExperimental(at: resolution, for: containmentType)
 
         var indexArray = Array<UInt64>(repeating: 0, count: Int(maxSize))

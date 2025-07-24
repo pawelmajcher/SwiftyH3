@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3Cell {
+public extension H3Cell {
     func directedEdge(to destination: H3Cell) throws -> H3DirectedEdge {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         guard destination.isValid else { throw SwiftyH3Error.invalidInput }
@@ -16,14 +16,14 @@ extension H3Cell {
     }
 }
 
-extension H3DirectedEdge {
+public extension H3DirectedEdge {
     init?(origin: H3Cell, destination: H3Cell) {
         guard let edge = try? origin.directedEdge(to: destination) else { return nil }
         self = edge
     }
 }
 
-extension H3Cell {
+public extension H3Cell {
     var directedEdges: [H3DirectedEdge] {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }

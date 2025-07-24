@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3Cell {
+public extension H3Cell {
     func parent(times parentRes: Int32 = 1) throws -> H3Cell {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
@@ -19,7 +19,7 @@ extension H3Cell {
     }
 }
 
-extension H3Cell {
+internal extension H3Cell {
     func childrenSize(at childRes: H3CellResolution) throws -> Int64 {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
@@ -33,7 +33,7 @@ extension H3Cell {
     }
 }
 
-extension H3Cell {
+public extension H3Cell {
     func children(at childRes: H3CellResolution) throws -> [H3Cell] {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 

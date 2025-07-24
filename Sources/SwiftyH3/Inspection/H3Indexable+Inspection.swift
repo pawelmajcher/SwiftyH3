@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3Indexable {
+public extension H3Indexable {
     var resolution: H3CellResolution {
         get throws {
             guard
@@ -13,7 +13,7 @@ extension H3Indexable {
     }
 }
 
-extension H3Indexable {
+public extension H3Indexable {
     var baseCellNumber: Int32 {
         return Ch3.getBaseCellNumber(self.id)
     }

@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension [H3Cell] {
+public extension [H3Cell] {
     var multiPolygon: H3MultiPolygon {
         get throws {
             guard self.allSatisfy({ $0.isValid }) else { throw SwiftyH3Error.invalidInput }
@@ -24,7 +24,7 @@ extension [H3Cell] {
     }
 }
 
-extension H3MultiPolygon {
+public extension H3MultiPolygon {
     init?(from h3cells: [H3Cell]) {
         guard let multiPolygon = try? h3cells.multiPolygon else { return nil }
         self = multiPolygon

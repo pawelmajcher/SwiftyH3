@@ -36,7 +36,6 @@ struct CellTests {
     }
 
     @Test func cellAreaRads2() throws {
-        print(try cell.areaRads2)
         #expect(try cell.areaRads2.isApproximatelyEqual(to: 0.0000065310))
     }
 
@@ -133,7 +132,7 @@ struct CellTests {
     }
 
     @Test func intToString() throws {
-        #expect(try H3Cell(599686042433355775).description == "85283473fffffff")
+        #expect(try H3Cell(599686042433355775).h3String == "85283473fffffff")
     }
 
     @Test func isPentagon() throws {

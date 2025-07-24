@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3Indexable {
+public extension H3Indexable {
     var h3String: String {
         get throws {
             let h3StringBufferSize = 17
@@ -16,7 +16,7 @@ extension H3Indexable {
     }
 }
 
-extension String {
+internal extension String {
     var asH3Index: UInt64 {
         get throws {
             guard self.count == 15 || self.count == 16 else { throw SwiftyH3Error.invalidInput }
@@ -35,25 +35,25 @@ extension String {
 }
 
 extension H3Cell: LosslessStringConvertible {
-    var description: String { try! self.h3String }
+    public var description: String { try! self.h3String }
 
-    init?(_ h3String: String) {
+    public init?(_ h3String: String) {
         try? self.init(h3String.asH3Index)
     }
 }
 
 extension H3DirectedEdge: LosslessStringConvertible {
-    var description: String { try! self.h3String }
+    public var description: String { try! self.h3String }
 
-    init?(_ h3String: String) {
+    public init?(_ h3String: String) {
         try? self.init(h3String.asH3Index)
     }
 }
 
 extension H3Vertex: LosslessStringConvertible {
-    var description: String { try! self.h3String }
+    public var description: String { try! self.h3String }
 
-    init?(_ h3String: String) {
+    public init?(_ h3String: String) {
         try? self.init(h3String.asH3Index)
     }
 }

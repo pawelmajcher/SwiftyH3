@@ -1,7 +1,7 @@
 
 import Ch3
 
-extension H3Cell {
+public extension H3Cell {
     func vertex(_ vertexNumber: Int32) throws -> H3Vertex {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
