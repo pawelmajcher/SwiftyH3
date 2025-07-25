@@ -120,7 +120,7 @@ struct CellTests {
             H3Cell("8528342bfffffff")!,
         ]
 
-        #expect(try cell.gridPathCells(to: H3Cell("8528342bfffffff")!) == path)
+        #expect(try cell.path(to: H3Cell("8528342bfffffff")!) == path)
     }
 
     @Test func gridRing() throws {

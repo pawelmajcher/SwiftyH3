@@ -112,7 +112,7 @@ extension H3Cell {
     /// - Returns: An array of `self.gridDistance(to: destination) + 1` cells,
     /// where the first cell is the origin cell, each next cell is a neighbor
     /// of the previous cell, and the last cell is the destination cell.
-    public func gridPathCells(to destination: H3Cell) throws -> [H3Cell] {
+    public func path(to destination: H3Cell) throws -> [H3Cell] {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
         let pathSize = try self.gridPathCellsSize(to: destination)
