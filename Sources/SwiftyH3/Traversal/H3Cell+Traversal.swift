@@ -39,7 +39,14 @@ extension H3Cell {
 }
 
 extension H3Cell {
-    public func gridRing(distance: Int32) throws -> [H3Cell] {
+    /// Produces the "hollow ring" of cells which are the same grid
+    /// distance away from the origin cell.
+    /// 
+    /// - Parameter distance: The exact grid distance (number of steps)
+    /// from the cell (e.g., distance = 1 returns immediate neighbors).
+    /// 
+    /// - Returns: An array with generated cells at given distance.
+    public func gridRing(distance: Int32 = 1) throws -> [H3Cell] {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
         let maxRingSize = try H3Cell.maxGridRingSize(distance: distance)
@@ -53,6 +60,16 @@ extension H3Cell {
         return indexArray.filter { h3index in h3index != 0 }.map { h3index in H3Cell(h3index) }
     }
 
+    /// Produces the "filled-in disk" of cells which are at maximum
+    /// the given distance away from the origin cell.
+    /// 
+    /// Output order is not guaranteed.
+    /// 
+    /// - Parameter distance: The maximum grid distance (number of steps)
+    /// from the cell (e.g., distance = 2 returns the origin cell,
+    /// its immediate neighbors and their neighbors).
+    /// 
+    /// - Returns: An array with cells making up the disk.
     public func gridDisk(distance: Int32) throws -> [H3Cell] {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
@@ -80,6 +97,21 @@ extension H3Cell {
         return pathSize
     }
 
+    /// Returns a minimal-length contiguous path to the destination cell.
+    /// 
+    /// Paths exist in the H3 grid of cells, and may not align closely with
+    /// either Cartesian lines or great arcs.
+    /// 
+    /// - Parameter destination: The destination `H3Cell`.
+    /// 
+    /// - Throws: `SwiftyH3Error.H3Error(Int32)` if the cells are very far apart,
+    /// or if the cells are on opposite sides of a pentagon. Refer to the
+    /// [table of error codes](https://h3geo.org/docs/library/errors#table-of-error-codes)
+    /// for more.
+    /// 
+    /// - Returns: An array of `self.gridDistance(to: destination) + 1` cells,
+    /// where the first cell is the origin cell, each next cell is a neighbor
+    /// of the previous cell, and the last cell is the destination cell.
     public func gridPathCells(to destination: H3Cell) throws -> [H3Cell] {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
