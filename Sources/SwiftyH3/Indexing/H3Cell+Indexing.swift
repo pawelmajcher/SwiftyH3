@@ -16,8 +16,8 @@ public extension H3Cell {
         }
     }
 
-    /// The cell boundary (coordinates for all vertices of the cell).
-    var boundary: [H3LatLng] {
+    /// An array of locations of the cell's vertices, joinly representing an `H3Loop` (linear ring).
+    var boundary: H3Loop {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
