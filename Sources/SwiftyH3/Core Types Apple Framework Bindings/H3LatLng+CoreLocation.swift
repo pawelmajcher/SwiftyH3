@@ -4,19 +4,19 @@
 import CoreLocation
 
 public extension H3LatLng {
-    init(from coordinates: CLLocationCoordinate2D) {
+    init(_ coordinates: CLLocationCoordinate2D) {
         self.init(latitudeDegs: coordinates.latitude, longitudeDegs: coordinates.longitude)
     }
 
-    var coordinates: CLLocationCoordinate2D { CLLocationCoordinate2D(from: self) }
+    var coordinates: CLLocationCoordinate2D { CLLocationCoordinate2D(self) }
 }
 
 public extension CLLocationCoordinate2D {
-    init(from h3latlng: H3LatLng) {
+    init(_ h3latlng: H3LatLng) {
         self.init(latitude: h3latlng.latitudeDegs, longitude: h3latlng.longitudeDegs)
     }
 
-    var h3LatLng: H3LatLng { H3LatLng(from: self) }
+    var h3LatLng: H3LatLng { H3LatLng(self) }
 }
 
 #endif
