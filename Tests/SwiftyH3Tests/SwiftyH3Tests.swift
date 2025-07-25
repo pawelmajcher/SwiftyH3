@@ -639,7 +639,7 @@ struct VertexTests {
 
 struct PolygonTests {
     let polygon1 = H3Polygon(
-        boundary: [
+        [
             H3LatLng(latitudeDegs: 37.813318999983238, longitudeDegs: -122.4089866999972145),
             H3LatLng(latitudeDegs: 37.7198061999978478, longitudeDegs: -122.3544736999993603),
             H3LatLng(latitudeDegs: 37.8151571999998453, longitudeDegs: -122.4798767000009008),
@@ -658,7 +658,7 @@ struct PolygonTests {
     ]
 
     let polygon2 = H3Polygon(
-        boundary: [
+        [
             H3LatLng(latitudeDegs: 37.784046, longitudeDegs: -122.427089),
             H3LatLng(latitudeDegs: 37.772267, longitudeDegs: -122.434586),
             H3LatLng(latitudeDegs: 37.761736, longitudeDegs: -122.425769),
