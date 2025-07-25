@@ -2,7 +2,9 @@
 import Ch3
 
 extension H3Cell {
-    internal func gridDistance(to destination: H3Cell) throws -> Int64 {
+    /// Returns the minimum number of "hops" on the grid to get from
+    /// the origin to the destination cell.
+    public func gridDistance(to destination: H3Cell) throws -> Int64 {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         guard destination.isValid else { throw SwiftyH3Error.invalidInput }
 
