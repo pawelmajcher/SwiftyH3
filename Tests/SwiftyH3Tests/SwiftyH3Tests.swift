@@ -490,7 +490,7 @@ struct DirectedEdgeTests {
 struct GlobalConstantTests {
     @Test func getHexagonAreaAvgKm2() throws(SwiftyH3Error) {
         #expect(
-            try H3CellResolution
+            H3CellResolution
                 .res0
                 .averageHexagonArea
                 .converted(to: .squareKilometers)
@@ -501,7 +501,7 @@ struct GlobalConstantTests {
 
     @Test func getHexagonAreaAvgM2() throws(SwiftyH3Error) {
         #expect(
-            try H3CellResolution
+            H3CellResolution
                 .res0
                 .averageHexagonArea
                 .value
@@ -511,7 +511,7 @@ struct GlobalConstantTests {
 
     @Test func getHexagonEdgeLengthAvgKm() throws(SwiftyH3Error) {
         #expect(
-            try H3CellResolution
+            H3CellResolution
                 .res0
                 .averageHexagonEdgeLength
                 .converted(to: .kilometers)
@@ -522,7 +522,7 @@ struct GlobalConstantTests {
 
     @Test func getHexagonEdgeLengthAvgM() throws(SwiftyH3Error) {
         #expect(
-            try H3CellResolution
+            H3CellResolution
                 .res0
                 .averageHexagonEdgeLength
                 .value
@@ -532,7 +532,7 @@ struct GlobalConstantTests {
 
     @Test func getNumCells() throws(SwiftyH3Error) {
         #expect(
-            try H3CellResolution.res0.numberOfCells == 122
+            H3CellResolution.res0.numberOfCells == 122
         )
     }
 
@@ -543,7 +543,7 @@ struct GlobalConstantTests {
             "80a7fffffffffff", "80c3fffffffffff", "80d7fffffffffff", "80ebfffffffffff",
         ].map { cellString in H3Cell(cellString)! }
 
-        #expect(try H3CellResolution.res0.pentagons == pentagons0)
+        #expect(H3CellResolution.res0.pentagons == pentagons0)
     }
 
     @Test func getRes0Cells() throws(SwiftyH3Error) {
@@ -581,7 +581,7 @@ struct GlobalConstantTests {
             "80f1fffffffffff", "80f3fffffffffff",
         ].map { cellString in H3Cell(cellString)! }
 
-        #expect(try H3Cell.res0Cells == res0cells)
+        #expect(H3Cell.res0Cells == res0cells)
     }
 }
 

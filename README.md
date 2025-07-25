@@ -134,20 +134,20 @@ Go to *File* > *Add Package Dependencies...* and enter `https://github.com/pawel
 | :---: | :--- |
 | [`degsToRads`](https://h3geo.org/docs/api/misc#degstorads) | `Measurement<UnitAngle>(value: 23, unit: .degrees).converted(to: .radians).value` |
 | [`radsToDegs`](https://h3geo.org/docs/api/misc#radstodegs) | `Measurement<UnitAngle>(value: 1.2, unit: .radians).converted(to: .degrees).value` |
-| [`getHexagonAreaAvgKm2`](https://h3geo.org/docs/api/misc#gethexagonareaavgkm2) | `try H3CellResolution.res8.averageHexagonArea.converted(to: .squareKilometers).value` |
-| [`getHexagonAreaAvgM2`](https://h3geo.org/docs/api/misc#gethexagonareaavgm2) | `try H3CellResolution.res8.averageHexagonArea.value` |
+| [`getHexagonAreaAvgKm2`](https://h3geo.org/docs/api/misc#gethexagonareaavgkm2) | `H3CellResolution.res8.averageHexagonArea.converted(to: .squareKilometers).value` |
+| [`getHexagonAreaAvgM2`](https://h3geo.org/docs/api/misc#gethexagonareaavgm2) | `H3CellResolution.res8.averageHexagonArea.value` |
 | [`cellAreaRads2`](https://h3geo.org/docs/api/misc#cellarearads2) | `try cell.areaRads2` |
 | [`cellAreaKm2`](https://h3geo.org/docs/api/misc#cellareakm2) | `try cell.area.converted(to: .squareKilometers).value` |
 | [`cellAreaM2`](https://h3geo.org/docs/api/misc#cellaream2) | `try cell.area.converted(to: .squareMeters).value` |
-| [`getHexagonEdgeLengthAvgKm`](https://h3geo.org/docs/api/misc#gethexagonedgelengthavgkm) | `try H3CellResolution.res8.averageHexagonEdgeLength.converted(to: .kilometers).value` |
-| [`getHexagonEdgeLengthAvgM`](https://h3geo.org/docs/api/misc#gethexagonedgelengthavgm) | `try H3CellResolution.res8.averageHexagonEdgeLength.value` |
+| [`getHexagonEdgeLengthAvgKm`](https://h3geo.org/docs/api/misc#gethexagonedgelengthavgkm) | `H3CellResolution.res8.averageHexagonEdgeLength.converted(to: .kilometers).value` |
+| [`getHexagonEdgeLengthAvgM`](https://h3geo.org/docs/api/misc#gethexagonedgelengthavgm) | `H3CellResolution.res8.averageHexagonEdgeLength.value` |
 | [`edgeLengthKm`](https://h3geo.org/docs/api/misc#edgelengthkm) | `try directedEdge.length.converted(to: .kilometers).value` |
 | [`edgeLengthM`](https://h3geo.org/docs/api/misc#edgelengthm) | `try directedEdge.length.value` |
 | [`edgeLengthRads`](https://h3geo.org/docs/api/misc#edgelengthrads) | `try directedEdge.lengthRads.value` |
-| [`getNumCells`](https://h3geo.org/docs/api/misc#getnumcells) | `try H3CellResolution.res3.numberOfCells` |
-| [`getRes0Cells`](https://h3geo.org/docs/api/misc#getres0cells) | `try H3Cell.res0Cells` |
+| [`getNumCells`](https://h3geo.org/docs/api/misc#getnumcells) | `H3CellResolution.res3.numberOfCells` |
+| [`getRes0Cells`](https://h3geo.org/docs/api/misc#getres0cells) | `H3Cell.res0Cells` |
 | [`res0CellCount`](https://h3geo.org/docs/api/misc#res0cellcount) | *This function exists for memory management and is not exposed.* |
-| [`getPentagons`](https://h3geo.org/docs/api/misc#getpentagons) | `try H3CellResolution.res3.pentagons` |
+| [`getPentagons`](https://h3geo.org/docs/api/misc#getpentagons) | `H3CellResolution.res3.pentagons` |
 | [`pentagonCount`](https://h3geo.org/docs/api/misc#pentagoncount) | *This function exists for memory management and is not exposed.* |
 | [`greatCircleDistanceKm`](https://h3geo.org/docs/api/misc#greatcircledistancekm) | `h3LatLng1.distance(to: h3LatLng2).converted(to: .kilometers).value` |
 | [`greatCircleDistanceM`](https://h3geo.org/docs/api/misc#greatcircledistancem) | `h3LatLng1.distance(to: h3LatLng2).value` |
