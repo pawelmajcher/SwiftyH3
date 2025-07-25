@@ -35,6 +35,15 @@ extension H3Polygon {
         }
     }
 
+    /// Produce a collection of cells that are contained within the polygon.
+    /// 
+    /// Containment is determined by centroids of the cells, so any
+    /// polygon partitioning will map to a partitioning of H3 cells
+    /// (without overlaps).
+    /// 
+    /// - Parameter resolution: The target cell resolution.
+    /// 
+    /// - Returns: An array with generated cells at given resolution.
     public func cells(at resolution: H3CellResolution) throws -> [H3Cell] {
         let maxSize = try self.maxCellsSize(at: resolution)
 
@@ -57,7 +66,16 @@ extension H3Polygon {
         return indexArray.filter { h3index in h3index != 0 }.map { h3index in H3Cell(h3index) }
     }
 
-    public func cellsExperimental(at resolution: H3CellResolution, for containmentType: H3CellContainmentType) throws -> [H3Cell] {
+    /// Produce a collection of cells that are contained within the polygon
+    /// using an experimental algorithm.
+    /// 
+    /// Containment is determined by chosen containment mode.
+    /// 
+    /// - Parameter resolution: The target cell resolution.
+    /// - Parameter containmentType: The containment mode to be used by the algorithm.
+    /// 
+    /// - Returns: An array with generated cells at given resolution.
+    public func cellsExperimental(at resolution: H3CellResolution, containmentType: H3CellContainmentType = .center) throws -> [H3Cell] {
         let maxSize = try self.maxCellsSizeExperimental(at: resolution, for: containmentType)
 
         var indexArray = Array<UInt64>(repeating: 0, count: Int(maxSize))

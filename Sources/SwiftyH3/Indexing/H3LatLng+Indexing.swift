@@ -2,6 +2,9 @@
 import Ch3
 
 public extension H3LatLng {
+    /// Find the cell for given coordinates.
+    /// 
+    /// - Parameter resolution: The resolution of the cell.
     func cell(at resolution: H3CellResolution) throws -> H3Cell {
         var cLatLng = Ch3.LatLng(from: self)
         var cellIndex: UInt64 = 0

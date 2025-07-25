@@ -2,6 +2,7 @@
 import Ch3
 
 public extension H3Cell {
+    /// Array of all resolution 0 cells.
     static var res0Cells: [H3Cell] {
         get throws {
             let res0CellCount = 122

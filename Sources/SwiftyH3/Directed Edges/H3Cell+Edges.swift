@@ -2,6 +2,7 @@
 import Ch3
 
 public extension H3Cell {
+    /// A directed edge from the cell to another neighboring cell.
     func directedEdge(to destination: H3Cell) throws -> H3DirectedEdge {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         guard destination.isValid else { throw SwiftyH3Error.invalidInput }
@@ -17,6 +18,9 @@ public extension H3Cell {
 }
 
 public extension H3DirectedEdge {
+    /// An optional initializer for a directed edge from one cell to another.
+    /// 
+    /// Returns `nil` if the cells are not neighboring cells.
     init?(origin: H3Cell, destination: H3Cell) {
         guard let edge = try? origin.directedEdge(to: destination) else { return nil }
         self = edge
@@ -24,6 +28,7 @@ public extension H3DirectedEdge {
 }
 
 public extension H3Cell {
+    /// An array of all directed edges starting from the cell.
     var directedEdges: [H3DirectedEdge] {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }

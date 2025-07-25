@@ -2,6 +2,7 @@
 import Ch3
 
 public extension H3Indexable {
+    /// The resolution of the cell associated with this index.
     var resolution: H3CellResolution {
         get throws {
             guard
@@ -14,6 +15,7 @@ public extension H3Indexable {
 }
 
 public extension H3Indexable {
+    /// The base cell number of the index.
     var baseCellNumber: Int32 {
         return Ch3.getBaseCellNumber(self.id)
     }

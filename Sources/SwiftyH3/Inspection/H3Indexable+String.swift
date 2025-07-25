@@ -2,6 +2,7 @@
 import Ch3
 
 public extension H3Indexable {
+    /// The H3 index's string representation.
     var h3String: String {
         get throws {
             let h3StringBufferSize = 17

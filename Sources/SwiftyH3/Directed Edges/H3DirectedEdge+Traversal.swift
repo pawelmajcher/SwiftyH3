@@ -2,6 +2,7 @@
 import Ch3
 
 public extension H3DirectedEdge {
+    /// The origin cell of the edge.
     var origin: H3Cell {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
@@ -16,6 +17,7 @@ public extension H3DirectedEdge {
         }
     }
 
+    /// The destination cell of the edge.
     var destination: H3Cell {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }

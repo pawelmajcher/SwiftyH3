@@ -2,7 +2,8 @@
 import Ch3
 
 public extension H3DirectedEdge {
-    var boundary: [H3LatLng] {
+    /// An array of locations of the cell's vertices, joinly representing an `H3Loop` (linear ring).
+    var boundary: H3Loop {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
 

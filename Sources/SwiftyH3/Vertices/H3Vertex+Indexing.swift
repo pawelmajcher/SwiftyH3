@@ -2,6 +2,7 @@
 import Ch3
 
 public extension H3Vertex {
+    /// Coordinates of the vertex.
     var latLng: H3LatLng {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }

@@ -2,6 +2,13 @@
 import Ch3
 
 public extension H3Cell {
+    /// Returns `H3Vertex` for the specified vertex number of the cell.
+    /// 
+    /// - Parameter vertexNumber: The incremental number of the index.
+    /// Valid vertex numbers are between 0 and 5 (inclusive) for hexagonal
+    /// cells and between 0 and 4 for pentagonal cells.
+    /// 
+    /// Determine if the cell is pentagonal by `self.isPentagon`.
     func vertex(_ vertexNumber: Int32) throws -> H3Vertex {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
@@ -14,6 +21,7 @@ public extension H3Cell {
         return H3Vertex(vertexId)
     }
 
+    /// An array of all vertices of the cell.
     var vertices: [H3Vertex] {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }

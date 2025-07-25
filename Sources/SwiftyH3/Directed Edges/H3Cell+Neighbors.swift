@@ -2,6 +2,8 @@
 import Ch3
 
 public extension H3Cell {
+    /// Returns `true` if the cell is neighboring with another cell
+    /// and `false` otherwise.
     func isNeighbor(of anotherCell: H3Cell) throws -> Bool {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         guard anotherCell.isValid else { throw SwiftyH3Error.invalidInput }

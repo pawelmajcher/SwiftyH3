@@ -2,6 +2,7 @@
 import Ch3
 
 public extension H3Cell {
+    /// The coordinates for the center of the cell.
     var center: H3LatLng {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
@@ -15,6 +16,7 @@ public extension H3Cell {
         }
     }
 
+    /// The cell boundary (coordinates for all vertices of the cell).
     var boundary: [H3LatLng] {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }

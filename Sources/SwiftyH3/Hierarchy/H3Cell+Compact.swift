@@ -2,6 +2,10 @@
 import Ch3
 
 public extension [H3Cell] {
+    /// An array of cells with a parent cell recursively replacing the children cells
+    /// if all children cells are included in the original (uncompacted) array.
+    /// 
+    /// This property throws if the input cells do not share the same resolution.
     var compacted: [H3Cell] {
         get throws {
             guard self.allSatisfy({ $0.isValid }) else { throw SwiftyH3Error.invalidInput }
@@ -17,7 +21,7 @@ public extension [H3Cell] {
 
             guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
 
-            return indexOutputArray.filter { index in index != 0}.map { index in H3Cell(index) }
+            return indexOutputArray.filter { index in index != 0 }.map { index in H3Cell(index) }
         }
     }
 }
@@ -36,6 +40,7 @@ extension [H3Cell] {
         return uncompactedArraySize
     }
 
+    /// Returns the array uncompacting the sequence of indexes to the given resolution.
     public func uncompacted(at resolution: H3CellResolution) throws -> [H3Cell] {
         guard self.allSatisfy({ $0.isValid }) else { throw SwiftyH3Error.invalidInput }
 

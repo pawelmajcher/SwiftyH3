@@ -3,6 +3,7 @@ import Foundation
 import Ch3
 
 public extension H3CellResolution {
+    /// An average area of a hexagon with the resolution.
     var averageHexagonArea: Measurement<UnitArea> {
         get throws {
             var areaM2: Double = 0
@@ -15,6 +16,7 @@ public extension H3CellResolution {
         }
     }
 
+    /// An average edge length of a hexagon with the resolution.
     var averageHexagonEdgeLength: Measurement<UnitLength> {
         get throws {
             var lengthM: Double = 0
@@ -27,6 +29,7 @@ public extension H3CellResolution {
         }
     }
 
+    /// The total number of cells with the resolution.
     var numberOfCells: Int64 {
         get throws {
             var cellCount: Int64 = 0

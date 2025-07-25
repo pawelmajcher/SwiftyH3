@@ -2,6 +2,7 @@
 import Ch3
 
 public extension [H3Cell] {
+    /// The multipolygon representing the given set of cells.
     var multiPolygon: H3MultiPolygon {
         get throws {
             guard self.allSatisfy({ $0.isValid }) else { throw SwiftyH3Error.invalidInput }

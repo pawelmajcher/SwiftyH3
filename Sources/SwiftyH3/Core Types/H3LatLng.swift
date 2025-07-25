@@ -1,4 +1,5 @@
 
+/// A latitude and longitude pair associated with a location.
 public struct H3LatLng: Hashable, Sendable {
     /// Latitude in radians.
     public let latitudeRads: Double

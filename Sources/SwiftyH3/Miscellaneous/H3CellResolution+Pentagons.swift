@@ -2,6 +2,7 @@
 import Ch3
 
 public extension H3CellResolution {
+    /// All pentagon cells for the resolution.
     var pentagons: [H3Cell] {
         get throws {
             let pentagonCount = 12

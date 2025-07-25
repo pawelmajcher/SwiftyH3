@@ -3,6 +3,7 @@ import Foundation
 import Ch3
 
 public extension H3DirectedEdge {
+    /// The length of the edge as a measurement value (in meters).
     var length: Measurement<UnitLength> {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
@@ -17,6 +18,7 @@ public extension H3DirectedEdge {
         }
     }
 
+    /// The length of the edge as a measurement value (in radians).
     var lengthRads: Measurement<UnitAngle> {
         get throws {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
