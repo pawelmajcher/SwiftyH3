@@ -1,7 +1,7 @@
 
 import Ch3
 
-public extension [H3Cell] {
+public extension Sequence<H3Cell> {
     /// The multipolygon representing the given set of cells.
     var multiPolygon: H3MultiPolygon {
         get throws(SwiftyH3Error) {
