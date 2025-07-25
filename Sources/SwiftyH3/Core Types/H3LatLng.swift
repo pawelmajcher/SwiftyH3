@@ -1,7 +1,10 @@
 
 public struct H3LatLng: Hashable, Sendable {
-    let latitudeRads: Double
-    let longitudeRads: Double
+    /// Latitude in radians.
+    public let latitudeRads: Double
+
+    /// Longitude in radians.
+    public let longitudeRads: Double
 
     public init(latitudeRads: Double, longitudeRads: Double) {
         self.latitudeRads = latitudeRads
