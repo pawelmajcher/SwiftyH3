@@ -13,6 +13,6 @@ extension H3Polygon {
         }
 
         let boundary = loops.removeFirst()
-        return H3Polygon(boundary: boundary, holes: loops)
+        return H3Polygon(boundary, holes: loops)
     }
 }

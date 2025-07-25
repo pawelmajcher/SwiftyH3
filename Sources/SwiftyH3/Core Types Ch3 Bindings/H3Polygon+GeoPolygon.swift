@@ -5,7 +5,7 @@ extension H3Polygon {
     init(from geoPolygon: Ch3.GeoPolygon) {
         let geoLoopHoles = Array<GeoLoop>(UnsafeBufferPointer(start: geoPolygon.holes, count: Int(geoPolygon.numHoles)))
         let holes = geoLoopHoles.map { loop in [H3LatLng](from: loop) }
-        self = H3Polygon(boundary: [H3LatLng](from: geoPolygon.geoloop), holes: holes)
+        self = H3Polygon([H3LatLng](from: geoPolygon.geoloop), holes: holes)
     }
 
     func withGeoPolygon<R>(_ body: ((Ch3.GeoPolygon) throws -> R)) throws -> R {
