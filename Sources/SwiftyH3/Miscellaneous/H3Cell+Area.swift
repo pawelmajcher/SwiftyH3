@@ -5,7 +5,7 @@ import Ch3
 public extension H3Cell {
     /// The exact area of the cell as a measurement value (in square meters).
     var area: Measurement<UnitArea> {
-        get throws {
+        get throws(SwiftyH3Error) {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
             var areaM2: Double = 0
@@ -20,7 +20,7 @@ public extension H3Cell {
 
     /// The exact area of the cell in square radians.
     var areaRads2: Double {
-        get throws {
+        get throws(SwiftyH3Error) {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
             
             var areaRads2: Double = 0

@@ -5,5 +5,5 @@ public protocol H3Indexable: Hashable, Sendable {
     var isValid: Bool { get }
     var description: String { get }
 
-    init(_ id: UInt64) throws
+    init(_ id: UInt64)
 }

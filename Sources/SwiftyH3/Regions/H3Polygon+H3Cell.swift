@@ -2,23 +2,25 @@
 import Ch3
 
 extension H3Polygon {
-    internal func maxCellsSize(at resolution: H3CellResolution) throws -> Int64 {
-        try self.withGeoPolygon { geoPolygon in
-            try withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
+    internal func maxCellsSize(at resolution: H3CellResolution) throws(SwiftyH3Error) -> Int64 {
+        let (size, h3error) = self.withGeoPolygon { geoPolygon in
+            withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
                 var size: Int64 = 0
                 let h3error = Ch3.maxPolygonToCellsSize(geoPolygonPointer, resolution.rawValue, UInt32(0), &size)
-
-                guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
-                guard size != 0 else { throw SwiftyH3Error.returnedInvalidValue }
-
-                return size
+                
+                return (size, h3error)
             }
         }
+
+        guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
+        guard size != 0 else { throw SwiftyH3Error.returnedInvalidValue }
+
+        return size
     }
 
-    internal func maxCellsSizeExperimental(at resolution: H3CellResolution, for containmentType: H3CellContainmentType) throws -> Int64 {
-        try self.withGeoPolygon { geoPolygon in
-            try withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
+    internal func maxCellsSizeExperimental(at resolution: H3CellResolution, for containmentType: H3CellContainmentType) throws(SwiftyH3Error) -> Int64 {
+        let (size, h3error) = self.withGeoPolygon { geoPolygon in
+            withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
                 var size: Int64 = 0
                 let h3error = Ch3.maxPolygonToCellsSizeExperimental(
                     geoPolygonPointer,
@@ -27,12 +29,14 @@ extension H3Polygon {
                     &size
                 )
 
-                guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
-                guard size != 0 else { throw SwiftyH3Error.returnedInvalidValue }
-
-                return size
+                return (size, h3error)  
             }
         }
+
+        guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
+        guard size != 0 else { throw SwiftyH3Error.returnedInvalidValue }
+
+        return size
     }
 
     /// Produce a collection of cells that are contained within the polygon.
@@ -44,25 +48,24 @@ extension H3Polygon {
     /// - Parameter resolution: The target cell resolution.
     /// 
     /// - Returns: An array with generated cells at given resolution.
-    public func cells(at resolution: H3CellResolution) throws -> [H3Cell] {
+    public func cells(at resolution: H3CellResolution) throws(SwiftyH3Error) -> [H3Cell] {
         let maxSize = try self.maxCellsSize(at: resolution)
 
         var indexArray = Array<UInt64>(repeating: 0, count: Int(maxSize))
-        try indexArray.withUnsafeMutableBufferPointer { indexArrayBuffer in
-            try self.withGeoPolygon { geoPolygon in
-                try withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
-                    let h3error = Ch3.polygonToCells(
+        let h3error = indexArray.withUnsafeMutableBufferPointer { indexArrayBuffer in
+            self.withGeoPolygon { geoPolygon in
+                withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
+                    Ch3.polygonToCells(
                         geoPolygonPointer,
                         resolution.rawValue,
                         UInt32(0),
                         indexArrayBuffer.baseAddress
-                    )
-
-                    guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
+                    ) 
                 }
             }
         }
 
+        guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
         return indexArray.filter { h3index in h3index != 0 }.map { h3index in H3Cell(h3index) }
     }
 
@@ -75,25 +78,25 @@ extension H3Polygon {
     /// - Parameter containmentType: The containment mode to be used by the algorithm.
     /// 
     /// - Returns: An array with generated cells at given resolution.
-    public func cellsExperimental(at resolution: H3CellResolution, containmentType: H3CellContainmentType = .center) throws -> [H3Cell] {
+    public func cellsExperimental(at resolution: H3CellResolution, containmentType: H3CellContainmentType = .center) throws(SwiftyH3Error) -> [H3Cell] {
         let maxSize = try self.maxCellsSizeExperimental(at: resolution, for: containmentType)
 
         var indexArray = Array<UInt64>(repeating: 0, count: Int(maxSize))
-        try indexArray.withUnsafeMutableBufferPointer { indexArrayBuffer in
-            try self.withGeoPolygon { geoPolygon in
-                try withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
-                    let h3error = Ch3.polygonToCellsExperimental(
+        let h3error = indexArray.withUnsafeMutableBufferPointer { indexArrayBuffer in
+            self.withGeoPolygon { geoPolygon in
+                withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
+                    Ch3.polygonToCellsExperimental(
                         geoPolygonPointer,
                         resolution.rawValue,
                         containmentType.rawValue,
                         Int64(indexArrayBuffer.count),
                         indexArrayBuffer.baseAddress
                     )
-
-                    guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
                 }
             }
         }
+
+        guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
 
         return indexArray.filter { h3index in h3index != 0 }.map { h3index in H3Cell(h3index) }
     }

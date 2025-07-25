@@ -3,7 +3,7 @@ import Ch3
 
 public extension H3Cell {
     /// A directed edge from the cell to another neighboring cell.
-    func directedEdge(to destination: H3Cell) throws -> H3DirectedEdge {
+    func directedEdge(to destination: H3Cell) throws(SwiftyH3Error) -> H3DirectedEdge {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         guard destination.isValid else { throw SwiftyH3Error.invalidInput }
 
@@ -30,16 +30,17 @@ public extension H3DirectedEdge {
 public extension H3Cell {
     /// An array of all directed edges starting from the cell.
     var directedEdges: [H3DirectedEdge] {
-        get throws {
+        get throws(SwiftyH3Error) {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
             let numberOfEdges = 6
-            let edgeIds = try Array<UInt64>(unsafeUninitializedCapacity: numberOfEdges) { buffer, initializedCount in
-                let h3error = Ch3.originToDirectedEdges(self.id, buffer.baseAddress)
-                initializedCount = numberOfEdges
-
-                guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
+            
+            var edgeIds = Array<UInt64>(repeating: 0, count: numberOfEdges)
+            let h3error = edgeIds.withUnsafeMutableBufferPointer { buffer in
+                Ch3.originToDirectedEdges(self.id, buffer.baseAddress)
             }
+
+            guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
 
             return edgeIds.filter { edgeId in edgeId != 0 }.map { edgeId in H3DirectedEdge(edgeId) }
         }

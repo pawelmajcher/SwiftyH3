@@ -9,7 +9,7 @@ public extension H3Cell {
     /// cells and between 0 and 4 for pentagonal cells.
     /// 
     /// Determine if the cell is pentagonal by `self.isPentagon`.
-    func vertex(_ vertexNumber: Int32) throws -> H3Vertex {
+    func vertex(_ vertexNumber: Int32) throws(SwiftyH3Error) -> H3Vertex {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
         var vertexId: UInt64 = 0
@@ -23,16 +23,18 @@ public extension H3Cell {
 
     /// An array of all vertices of the cell.
     var vertices: [H3Vertex] {
-        get throws {
+        get throws(SwiftyH3Error) {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
             let numberOfVertices = 6
-            let vertexIds = try Array<UInt64>(unsafeUninitializedCapacity: numberOfVertices) { buffer, initializedCount in
-                let h3error = Ch3.cellToVertexes(self.id, buffer.baseAddress)
-                initializedCount = numberOfVertices
 
-                guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
+            var vertexIds = Array<UInt64>(repeating: 0, count: numberOfVertices)
+            let h3error = vertexIds.withUnsafeMutableBufferPointer { buffer in
+                Ch3.cellToVertexes(self.id, buffer.baseAddress)
+
             }
+
+            guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
 
             return vertexIds.filter { vertexId in vertexId != 0 }.map { vertexId in H3Vertex(vertexId) }
         }

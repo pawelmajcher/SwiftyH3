@@ -5,9 +5,9 @@ public extension [H3Cell] {
     /// An array of cells with a parent cell recursively replacing the children cells
     /// if all children cells are included in the original (uncompacted) array.
     /// 
-    /// This property throws if the input cells do not share the same resolution.
+    /// This property throws(SwiftyH3Error) if the input cells do not share the same resolution.
     var compacted: [H3Cell] {
-        get throws {
+        get throws(SwiftyH3Error) {
             guard self.allSatisfy({ $0.isValid }) else { throw SwiftyH3Error.invalidInput }
 
             var inputIndexArray = self.map { cell in cell.id }
@@ -27,7 +27,7 @@ public extension [H3Cell] {
 }
 
 extension [H3Cell] {
-    private func uncompactedArraySize(at resolution: H3CellResolution) throws -> Int64 {
+    private func uncompactedArraySize(at resolution: H3CellResolution) throws(SwiftyH3Error) -> Int64 {
         guard self.allSatisfy({ $0.isValid }) else { throw SwiftyH3Error.invalidInput }
 
         var uncompactedArraySize: Int64 = 0
@@ -41,7 +41,7 @@ extension [H3Cell] {
     }
 
     /// Returns the array uncompacting the sequence of indexes to the given resolution.
-    public func uncompacted(at resolution: H3CellResolution) throws -> [H3Cell] {
+    public func uncompacted(at resolution: H3CellResolution) throws(SwiftyH3Error) -> [H3Cell] {
         guard self.allSatisfy({ $0.isValid }) else { throw SwiftyH3Error.invalidInput }
 
         let maxSize = try self.uncompactedArraySize(at: resolution)

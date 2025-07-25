@@ -4,7 +4,7 @@ import Ch3
 public extension H3DirectedEdge {
     /// An array of locations of the directed edge's coordinates (a linear string).
     var boundary: H3Loop {
-        get throws {
+        get throws(SwiftyH3Error) {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
             var cBoundary = Ch3.CellBoundary()

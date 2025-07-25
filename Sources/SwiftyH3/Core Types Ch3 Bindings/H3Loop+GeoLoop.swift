@@ -7,7 +7,7 @@ extension H3Loop {
         self = indexArray.map { cLatLng in H3LatLng(from: cLatLng) }
     }
 
-    func withGeoLoop<R>(_ body: ((Ch3.GeoLoop) throws -> R)) throws -> R {
+    func withGeoLoop<R>(_ body: ((Ch3.GeoLoop) throws -> R)) rethrows -> R {
         var cLatLngArray = self.map { point in point.cLatLng }
         return try cLatLngArray.withUnsafeMutableBufferPointer { buffer in
             let geoloop = Ch3.GeoLoop(numVerts: Int32(buffer.count), verts: buffer.baseAddress)

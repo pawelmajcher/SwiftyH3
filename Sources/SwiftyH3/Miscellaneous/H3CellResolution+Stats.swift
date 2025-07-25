@@ -5,7 +5,7 @@ import Ch3
 public extension H3CellResolution {
     /// An average area of a hexagon with the resolution.
     var averageHexagonArea: Measurement<UnitArea> {
-        get throws {
+        get throws(SwiftyH3Error) {
             var areaM2: Double = 0
             let h3error = Ch3.getHexagonAreaAvgM2(self.rawValue, &areaM2)
 
@@ -18,7 +18,7 @@ public extension H3CellResolution {
 
     /// An average edge length of a hexagon with the resolution.
     var averageHexagonEdgeLength: Measurement<UnitLength> {
-        get throws {
+        get throws(SwiftyH3Error) {
             var lengthM: Double = 0
             let h3error = Ch3.getHexagonEdgeLengthAvgM(self.rawValue, &lengthM)
 
@@ -31,7 +31,7 @@ public extension H3CellResolution {
 
     /// The total number of cells with the resolution.
     var numberOfCells: Int64 {
-        get throws {
+        get throws(SwiftyH3Error) {
             var cellCount: Int64 = 0
             let h3error = Ch3.getNumCells(self.rawValue, &cellCount)
 

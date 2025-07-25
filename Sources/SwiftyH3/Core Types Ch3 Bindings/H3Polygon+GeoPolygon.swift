@@ -8,12 +8,12 @@ extension H3Polygon {
         self = H3Polygon([H3LatLng](from: geoPolygon.geoloop), holes: holes)
     }
 
-    func withGeoPolygon<R>(_ body: ((Ch3.GeoPolygon) throws -> R)) throws -> R {
+    func withGeoPolygon<R>(_ body: ((Ch3.GeoPolygon) throws -> R)) rethrows -> R {
         func withAllHoleGeoLoops<T>(
             holes: [[H3LatLng]],
             collected: [Ch3.GeoLoop] = [],
             _ body: ([Ch3.GeoLoop]) throws -> T
-        ) throws -> T {
+        ) rethrows -> T {
             if holes.isEmpty {
                 return try body(collected)
             } else {

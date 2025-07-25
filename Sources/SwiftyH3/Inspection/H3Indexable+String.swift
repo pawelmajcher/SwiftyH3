@@ -4,7 +4,7 @@ import Ch3
 public extension H3Indexable {
     /// The H3 index's string representation.
     var h3String: String {
-        get throws {
+        get throws(SwiftyH3Error) {
             let h3StringBufferSize = 17
             var cString = Array<CChar>(repeating: 0, count: h3StringBufferSize)
             let h3error = Ch3.h3ToString(self.id, &cString, h3StringBufferSize)
@@ -19,7 +19,7 @@ public extension H3Indexable {
 
 internal extension String {
     var asH3Index: UInt64 {
-        get throws {
+        get throws(SwiftyH3Error) {
             guard self.count == 15 || self.count == 16 else { throw SwiftyH3Error.invalidInput }
 
             var h3index: UInt64 = 0

@@ -10,7 +10,7 @@ public extension H3Cell {
     /// 
     /// Call to the function without this parameter or with `nil` value
     /// returns the immediate parent.
-    func parent(at parentRes: H3CellResolution? = nil) throws -> H3Cell {
+    func parent(at parentRes: H3CellResolution? = nil) throws(SwiftyH3Error) -> H3Cell {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         
         let resolution = try self.resolution
@@ -37,7 +37,7 @@ public extension H3Cell {
 }
 
 internal extension H3Cell {
-    func childrenSize(at childRes: H3CellResolution) throws -> Int64 {
+    func childrenSize(at childRes: H3CellResolution) throws(SwiftyH3Error) -> Int64 {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
         var childrenSize: Int64 = 0
@@ -60,7 +60,7 @@ public extension H3Cell {
     /// 
     /// Call to the function without this parameter or with `nil` value
     /// returns the array of seven immediate children.
-    func children(at childRes: H3CellResolution? = nil) throws -> [H3Cell] {
+    func children(at childRes: H3CellResolution? = nil) throws(SwiftyH3Error) -> [H3Cell] {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         let resolution = try self.resolution
         guard
@@ -69,12 +69,12 @@ public extension H3Cell {
 
         let childrenSize = try self.childrenSize(at: childRes)
 
-        let indexArray = try Array<UInt64>(unsafeUninitializedCapacity: Int(childrenSize)) { buffer, initializedCount in
-            let h3error = Ch3.cellToChildren(self.id, childRes.rawValue, buffer.baseAddress)
-            initializedCount = Int(childrenSize)
-
-            guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
+        var indexArray = Array<UInt64>(repeating: 0, count: Int(childrenSize))
+        let h3error = indexArray.withUnsafeMutableBufferPointer { buffer in
+            Ch3.cellToChildren(self.id, childRes.rawValue, buffer.baseAddress)
         }
+
+        guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
 
         return indexArray.map { h3index in H3Cell(h3index) }
     }
@@ -97,7 +97,7 @@ public extension H3Cell {
     /// 
     /// Call to the function without this parameter or with `nil` value
     /// returns the immediate center child.
-    func centerChild(at childRes: H3CellResolution? = nil) throws -> H3Cell {
+    func centerChild(at childRes: H3CellResolution? = nil) throws(SwiftyH3Error) -> H3Cell {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         let resolution = try self.resolution
         guard

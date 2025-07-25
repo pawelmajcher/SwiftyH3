@@ -11,40 +11,40 @@ extension Double {
 struct CellTests {
     let cell = H3Cell("85283473fffffff")!
 
-    @Test func areNeighborCells() throws {
+    @Test func areNeighborCells() throws(SwiftyH3Error) {
         #expect(try cell.isNeighbor(of: H3Cell("85283477fffffff")!))
     }
 
-    @Test func areNotNeighborCells() throws {
+    @Test func areNotNeighborCells() throws(SwiftyH3Error) {
         #expect(try !cell.isNeighbor(of: H3Cell("8528342bfffffff")!))
     }
 
-    @Test func areNeighborNotCells() throws {
+    @Test func areNeighborNotCells() throws(SwiftyH3Error) {
         #expect(throws: SwiftyH3Error.invalidInput) {
             try cell.isNeighbor(of: H3Cell("852834727fffffff")!)
         }
     }
 
-    @Test func cellAreaKM2() throws {
+    @Test func cellAreaKM2() throws(SwiftyH3Error) {
         #expect(
             try cell.area.converted(to: .squareKilometers).value.isApproximatelyEqual(
                 to: 265.0925581283))
     }
 
-    @Test func cellAreaM2() throws {
+    @Test func cellAreaM2() throws(SwiftyH3Error) {
         #expect(try cell.area.value.isApproximatelyEqual(to: 265092558.128, tolerance: 1e-3))
     }
 
-    @Test func cellAreaRads2() throws {
+    @Test func cellAreaRads2() throws(SwiftyH3Error) {
         #expect(try cell.areaRads2.isApproximatelyEqual(to: 0.0000065310))
     }
 
-    @Test func cellToCenterChild() throws {
+    @Test func cellToCenterChild() throws(SwiftyH3Error) {
         let cellCenterChild = H3Cell("872834700ffffff")!
         #expect(try cell.centerChild(at: .res7) == cellCenterChild)
     }
 
-    @Test func cellToChildren() throws {
+    @Test func cellToChildren() throws(SwiftyH3Error) {
         let cellChildren = [
             H3Cell("862834707ffffff")!,
             H3Cell("86283470fffffff")!,
@@ -58,16 +58,16 @@ struct CellTests {
         #expect(try cell.children(at: .res6) == cellChildren)
     }
 
-    @Test func cellToChildrenSize() throws {
+    @Test func cellToChildrenSize() throws(SwiftyH3Error) {
         #expect(try cell.childrenSize(at: .res6) == 7)
     }
 
-    @Test func cellToVertex() throws {
+    @Test func cellToVertex() throws(SwiftyH3Error) {
         let vertex = H3Vertex("22528340bfffffff")!
         #expect(try cell.vertex(0) == vertex)
     }
 
-    @Test func cellToVertexes() throws {
+    @Test func cellToVertexes() throws(SwiftyH3Error) {
         let vertices = [
             H3Vertex("22528340bfffffff")!,
             H3Vertex("235283447fffffff")!,
@@ -80,13 +80,13 @@ struct CellTests {
         #expect(try cell.vertices == vertices)
     }
 
-    @Test func cellsToDirectedEdge() throws {
+    @Test func cellsToDirectedEdge() throws(SwiftyH3Error) {
         let directededge = H3DirectedEdge("115283473fffffff")!
 
         #expect(try cell.directedEdge(to: H3Cell("85283477fffffff")!) == directededge)
     }
 
-    @Test func cellsNotToDirectedEdge() throws {
+    @Test func cellsNotToDirectedEdge() throws(SwiftyH3Error) {
         // Cell arguments are not neighbors
         #expect(throws: SwiftyH3Error.H3Error(11)) {
             try cell.directedEdge(to: H3Cell("8528342bfffffff")!)
@@ -97,11 +97,11 @@ struct CellTests {
         #expect(cell.baseCellNumber == 20)
     }
 
-    @Test func getResolution() throws {
+    @Test func getResolution() throws(SwiftyH3Error) {
         #expect(try cell.resolution == .res5)
     }
 
-    @Test func gridDisk() throws {
+    @Test func gridDisk() throws(SwiftyH3Error) {
         let disk = [
             "85283473fffffff", "85283447fffffff", "8528347bfffffff", "85283463fffffff", "85283477fffffff", "8528340ffffffff", "8528340bfffffff"
         ].map { cellString in H3Cell(cellString)! }
@@ -109,11 +109,11 @@ struct CellTests {
         #expect(try cell.gridDisk(distance: 1) == disk)
     }
 
-    @Test func gridDistance() throws {
+    @Test func gridDistance() throws(SwiftyH3Error) {
         #expect(try cell.gridDistance(to: H3Cell("8528342bfffffff")!) == 2)
     }
     
-    @Test func gridPathCells() throws {
+    @Test func gridPathCells() throws(SwiftyH3Error) {
         let path = [
             H3Cell("85283473fffffff")!,
             H3Cell("85283477fffffff")!,
@@ -123,7 +123,7 @@ struct CellTests {
         #expect(try cell.path(to: H3Cell("8528342bfffffff")!) == path)
     }
 
-    @Test func gridRing() throws {
+    @Test func gridRing() throws(SwiftyH3Error) {
         let ring = [
             "8528340bfffffff", "85283447fffffff", "8528347bfffffff", "85283463fffffff", "85283477fffffff", "8528340ffffffff"
         ].map { cellString in H3Cell(cellString)! }
@@ -131,24 +131,24 @@ struct CellTests {
         #expect(try cell.gridRing(distance: 1) == ring)
     }
 
-    @Test func intToString() throws {
+    @Test func intToString() throws(SwiftyH3Error) {
         #expect(try H3Cell(599686042433355775).h3String == "85283473fffffff")
     }
 
-    @Test func isPentagon() throws {
+    @Test func isPentagon() throws(SwiftyH3Error) {
         #expect(!cell.isPentagon)
     }
 
-    @Test func isResClassIII() throws {
+    @Test func isResClassIII() throws(SwiftyH3Error) {
         #expect(cell.isResClassIII)
     }
 
-    @Test func isValidCell() throws {
+    @Test func isValidCell() throws(SwiftyH3Error) {
         #expect(cell.isValid)
         #expect(H3Cell("85283473ffff") == nil)
     }
 
-    @Test func originToDirectedEdges() throws {
+    @Test func originToDirectedEdges() throws(SwiftyH3Error) {
         let edges = [
             H3DirectedEdge("115283473fffffff")!,
             H3DirectedEdge("125283473fffffff")!,
@@ -161,7 +161,7 @@ struct CellTests {
         #expect(try cell.directedEdges == edges)
     }
 
-    @Test func stringToInt() throws {
+    @Test func stringToInt() throws(SwiftyH3Error) {
         #expect(try "85283473fffffff".asH3Index == 599686042433355775)
     }
 }
@@ -169,7 +169,7 @@ struct CellTests {
 struct CellMoreTests {
     let cell = H3Cell("8928342e20fffff")!
 
-    @Test func cellToLatLng() throws {
+    @Test func cellToLatLng() throws(SwiftyH3Error) {
         let center = try cell.center
 
         #expect(
@@ -179,7 +179,7 @@ struct CellMoreTests {
             center.latitude.converted(to: .degrees).value.isApproximatelyEqual(to: 37.5012466151))
     }
 
-    @Test func cellToBoundary() throws {
+    @Test func cellToBoundary() throws(SwiftyH3Error) {
         let boundary = try cell.boundary
 
         #expect(
@@ -225,7 +225,7 @@ struct CellMoreTests {
                 to: 37.4995610248))
     }
 
-    @Test func cellToParent() throws {
+    @Test func cellToParent() throws(SwiftyH3Error) {
         let parent = H3Cell("832834fffffffff")!
 
         #expect(try cell.parent(at: .res3) == parent)
@@ -236,31 +236,31 @@ struct InvalidCellTests {
     // SwiftyH3 returns .invalidInput instead of .H3Error(5), because input is validated before execution
     let invalidCell = H3Cell("115283473fffffff")!
 
-    @Test func notCellArea() throws {
+    @Test func notCellArea() throws(SwiftyH3Error) {
         #expect(throws: SwiftyH3Error.invalidInput) {
             try invalidCell.area
         }
     }
 
-    @Test func notCellAreaRads2() throws {
+    @Test func notCellAreaRads2() throws(SwiftyH3Error) {
         #expect(throws: SwiftyH3Error.invalidInput) {
             try invalidCell.areaRads2
         }
     }
 
-    @Test func invalidCellToLatLng() throws {
+    @Test func invalidCellToLatLng() throws(SwiftyH3Error) {
         #expect(throws: SwiftyH3Error.invalidInput) {
             try invalidCell.center
         }
     }
 
-    @Test func notCellToVertex() throws {
+    @Test func notCellToVertex() throws(SwiftyH3Error) {
         #expect(throws: SwiftyH3Error.invalidInput) {
             try invalidCell.vertex(0)
         }
     }
 
-    @Test func notCellToVertexes() throws {
+    @Test func notCellToVertexes() throws(SwiftyH3Error) {
         #expect(throws: SwiftyH3Error.invalidInput) {
             try invalidCell.vertices
         }
@@ -358,7 +358,7 @@ struct MultiPolygonTests {
     ]
 
     @Test(arguments: zip(cellsStrings, multiPolygonArrays))
-    func cellsToMultiPolygon(cellStrings: [String], multiPolygon: [[[[Double]]]]) throws {
+    func cellsToMultiPolygon(cellStrings: [String], multiPolygon: [[[[Double]]]]) throws(SwiftyH3Error) {
         let h3cells = cellStrings.map { cellStr in H3Cell(cellStr)! }
 
         let h3multipolygon = try h3cells.multiPolygon
@@ -417,11 +417,11 @@ struct CompactCellsTests {
     static let uncompactedCells = uncompactedStrings.map { cellString in H3Cell(cellString)! }
     static let compactedCells = compactedStrings.map { cellString in H3Cell(cellString)! }
 
-    @Test func compactCells() throws {
+    @Test func compactCells() throws(SwiftyH3Error) {
         #expect(try Self.uncompactedCells.compacted == Self.compactedCells)
     }
 
-    @Test func uncompactCells() throws {
+    @Test func uncompactCells() throws(SwiftyH3Error) {
         #expect(try Set(Self.compactedCells.uncompacted(at: .res5)) == Set(Self.uncompactedCells))
     }
 }
@@ -430,7 +430,7 @@ struct DirectedEdgeTests {
     let directedEdge = H3DirectedEdge("115283473fffffff")!
     let invalidEdge = H3DirectedEdge("85283473fffffff")!
 
-    @Test func directedEdgeToBoundary() throws {
+    @Test func directedEdgeToBoundary() throws(SwiftyH3Error) {
         let boundary = try directedEdge.boundary
 
         #expect(boundary[0].longitudeDegs.isApproximatelyEqual(to: -122.0377349643))
@@ -440,44 +440,44 @@ struct DirectedEdgeTests {
         #expect(boundary[1].latitudeDegs.isApproximatelyEqual(to: 37.3375560844))
     }
 
-    @Test func notDirectedEdgeToBoundary() throws {
+    @Test func notDirectedEdgeToBoundary() throws(SwiftyH3Error) {
         #expect(throws: SwiftyH3Error.invalidInput) { try invalidEdge.boundary }
     }
 
-    @Test func directedEdgeToCells() throws {
+    @Test func directedEdgeToCells() throws(SwiftyH3Error) {
         #expect(try directedEdge.origin == H3Cell("85283473fffffff")!)
         #expect(try directedEdge.destination == H3Cell("85283477fffffff")!)
     }
 
-    @Test func notDirectedEdgeOrigin() throws {
+    @Test func notDirectedEdgeOrigin() throws(SwiftyH3Error) {
         #expect(throws: SwiftyH3Error.invalidInput) {
             try invalidEdge.origin
         }
     }
 
-    @Test func notDirectedEdgeDestination() throws {
+    @Test func notDirectedEdgeDestination() throws(SwiftyH3Error) {
         #expect(throws: SwiftyH3Error.invalidInput) {
             try invalidEdge.destination
         }
     }
 
-    @Test func edgeLengthKm() throws {
+    @Test func edgeLengthKm() throws(SwiftyH3Error) {
         #expect(
             try directedEdge.length.converted(to: .kilometers).value.isApproximatelyEqual(
                 to: 10.2947360862))
     }
 
-    @Test func notEdgeLength() throws {
+    @Test func notEdgeLength() throws(SwiftyH3Error) {
         #expect(throws: SwiftyH3Error.invalidInput) {
             try invalidEdge.length
         }
     }
 
-    @Test func edgeLengthM() throws {
+    @Test func edgeLengthM() throws(SwiftyH3Error) {
         #expect(try directedEdge.length.value.isApproximatelyEqual(to: 10294.7360861995))
     }
 
-    @Test func edgeLengthRads() throws {
+    @Test func edgeLengthRads() throws(SwiftyH3Error) {
         #expect(try directedEdge.lengthRads.value.isApproximatelyEqual(to: 0.0016158726))
     }
 
@@ -488,7 +488,7 @@ struct DirectedEdgeTests {
 }
 
 struct GlobalConstantTests {
-    @Test func getHexagonAreaAvgKm2() throws {
+    @Test func getHexagonAreaAvgKm2() throws(SwiftyH3Error) {
         #expect(
             try H3CellResolution
                 .res0
@@ -499,7 +499,7 @@ struct GlobalConstantTests {
         )
     }
 
-    @Test func getHexagonAreaAvgM2() throws {
+    @Test func getHexagonAreaAvgM2() throws(SwiftyH3Error) {
         #expect(
             try H3CellResolution
                 .res0
@@ -509,7 +509,7 @@ struct GlobalConstantTests {
         )
     }
 
-    @Test func getHexagonEdgeLengthAvgKm() throws {
+    @Test func getHexagonEdgeLengthAvgKm() throws(SwiftyH3Error) {
         #expect(
             try H3CellResolution
                 .res0
@@ -520,7 +520,7 @@ struct GlobalConstantTests {
         )
     }
 
-    @Test func getHexagonEdgeLengthAvgM() throws {
+    @Test func getHexagonEdgeLengthAvgM() throws(SwiftyH3Error) {
         #expect(
             try H3CellResolution
                 .res0
@@ -530,13 +530,13 @@ struct GlobalConstantTests {
         )
     }
 
-    @Test func getNumCells() throws {
+    @Test func getNumCells() throws(SwiftyH3Error) {
         #expect(
             try H3CellResolution.res0.numberOfCells == 122
         )
     }
 
-    @Test func getPentagons() throws {
+    @Test func getPentagons() throws(SwiftyH3Error) {
         let pentagons0 = [
             "8009fffffffffff", "801dfffffffffff", "8031fffffffffff", "804dfffffffffff",
             "8063fffffffffff", "8075fffffffffff", "807ffffffffffff", "8091fffffffffff",
@@ -546,7 +546,7 @@ struct GlobalConstantTests {
         #expect(try H3CellResolution.res0.pentagons == pentagons0)
     }
 
-    @Test func getRes0Cells() throws {
+    @Test func getRes0Cells() throws(SwiftyH3Error) {
         let res0cells = [
             "8001fffffffffff", "8003fffffffffff", "8005fffffffffff", "8007fffffffffff",
             "8009fffffffffff", "800bfffffffffff", "800dfffffffffff", "800ffffffffffff",
@@ -617,7 +617,7 @@ struct LatLngTests {
         )
     }
 
-    @Test func latLngToCell() throws {
+    @Test func latLngToCell() throws(SwiftyH3Error) {
         #expect(try H3LatLng(latitudeDegs: 20, longitudeDegs: 123).cell(at: .res2) == H3Cell("824b9ffffffffff")!)
     }
 }
@@ -631,7 +631,7 @@ struct VertexTests {
         #expect(!invalidVertex.isValid)
     }
 
-    @Test func vertexToLatLng() throws {
+    @Test func vertexToLatLng() throws(SwiftyH3Error) {
         #expect(try vertex.latLng.latitudeDegs.isApproximatelyEqual(to: 37.2713558667))
         #expect(try vertex.latLng.longitudeDegs.isApproximatelyEqual(to: -121.9150803271))
     }
@@ -678,7 +678,7 @@ struct PolygonTests {
         H3Cell("87283082effffff")!,
     ]
 
-    @Test func polygonToCells() throws {
+    @Test func polygonToCells() throws(SwiftyH3Error) {
         #expect(try polygon1.cells(at: .res7) == cells1)
         #expect(try polygon2.cells(at: .res7) == cells2)
     }

@@ -4,7 +4,7 @@ import Ch3
 public extension H3Cell {
     /// The coordinates for the center of the cell.
     var center: H3LatLng {
-        get throws {
+        get throws(SwiftyH3Error) {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
             var cLatLng = Ch3.LatLng(lat: 0, lng: 0)
@@ -18,7 +18,7 @@ public extension H3Cell {
 
     /// An array of locations of the cell's vertices, joinly representing an `H3Loop` (linear ring).
     var boundary: H3Loop {
-        get throws {
+        get throws(SwiftyH3Error) {
             guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
             var cBoundary = Ch3.CellBoundary()
