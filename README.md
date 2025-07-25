@@ -67,15 +67,15 @@ Go to *File* > *Add Package Dependencies...* and enter `https://github.com/pawel
 | :---: | :--- |
 | [`gridDistance`](https://h3geo.org/docs/api/traversal#griddistance) | `try originCell.gridDistance(to: destinationCell)` |
 | [`gridRing`](https://h3geo.org/docs/api/traversal#gridring) | `try cell.gridRing(distance: 1)` |
-| [`gridRingUnsafe`](https://h3geo.org/docs/api/traversal#gridringunsafe) | This function is not exposed, use `gridRing` |
+| [`gridRingUnsafe`](https://h3geo.org/docs/api/traversal#gridringunsafe) | Not exposed. Use `gridRing`. |
 | [`maxGridRingSize`](https://h3geo.org/docs/api/traversal#maxgridringsize) | *This function exists for memory management and is not exposed.* |
 | [`gridDisk`](https://h3geo.org/docs/api/traversal#griddisk) | `try cell.gridDisk(distance: 2)` |
 | [`maxGridDiskSize`](https://h3geo.org/docs/api/traversal#maxgriddisksize) | *This function exists for memory management and is not exposed.* |
-| [`gridDiskDistances`](https://h3geo.org/docs/api/traversal#griddiskdistances) | This function is not exposed, use sequence mapping like `try 1...3.map { cell.gridRing(distance: $0) }` |
-| [`gridDiskUnsafe`](https://h3geo.org/docs/api/traversal#griddiskunsafe) | This function is not exposed, use `gridDisk` |
-| [`gridDiskDistancesUnsafe`](https://h3geo.org/docs/api/traversal#griddiskdistancesunsafe) | This function is not exposed, use sequence mapping like `try 1...3.map { cell.gridRing(distance: $0) }` |
-| [`gridDiskDistancesSafe`](https://h3geo.org/docs/api/traversal#griddiskdistancessafe) | This function is not exposed, use sequence mapping like `try 1...3.map { cell.gridRing(distance: $0) }` |
-| [`gridDisksUnsafe`](https://h3geo.org/docs/api/traversal#griddisksunsafe) | This function is not exposed, use sequence mapping like `try cells.flatMap { cell in 1...3.flatMap { cell.gridRing(distance: $0) } }` |
+| [`gridDiskDistances`](https://h3geo.org/docs/api/traversal#griddiskdistances) | Not exposed. Use `try 1...3.map { cell.gridRing(distance: $0) }`. |
+| [`gridDiskUnsafe`](https://h3geo.org/docs/api/traversal#griddiskunsafe) | Not exposed. Use `gridDisk`. |
+| [`gridDiskDistancesUnsafe`](https://h3geo.org/docs/api/traversal#griddiskdistancesunsafe) | Not exposed. Use `try 1...3.map { cell.gridRing(distance: $0) }`. |
+| [`gridDiskDistancesSafe`](https://h3geo.org/docs/api/traversal#griddiskdistancessafe) | Not exposed. Use `try 1...3.map { cell.gridRing(distance: $0) }`. |
+| [`gridDisksUnsafe`](https://h3geo.org/docs/api/traversal#griddisksunsafe) | Not exposed. Use `try cells.flatMap { cell in 1...3.flatMap { cell.gridRing(distance: $0) } }`. |
 | [`gridPathCells`](https://h3geo.org/docs/api/traversal#gridpathcells) | `try cell1.path(to: ...)` |
 | [`gridPathCellsSize`](https://h3geo.org/docs/api/traversal#gridpathcellssize) | *This function exists for memory management and is not exposed.* |
 | [`cellToLocalIj`](https://h3geo.org/docs/api/traversal#celltolocalij) | ⚠️ Not yet available |
@@ -87,10 +87,10 @@ Go to *File* > *Add Package Dependencies...* and enter `https://github.com/pawel
 | :---: | :--- |
 | [`cellToParent`](https://h3geo.org/docs/api/hierarchy#celltoparent) | `try cell.parent(at: .res1)` |
 | [`cellToChildren`](https://h3geo.org/docs/api/hierarchy#celltochildren) | `try cell.children(at: .res12)` |
-| [`cellToChildrenSize`](https://h3geo.org/docs/api/hierarchy#celltochildrensize) | *This function exists for memory management and is not exposed.* |
-| [`cellToCenterChild`](https://h3geo.org/docs/api/hierarchy#celltocenterchild) | `try cell.centerChild(at: .res12)` |
-| [`cellToChildPos`](https://h3geo.org/docs/api/hierarchy#celltochildpos) | ⚠️ Not yet available |
-| [`childPosToCell`](https://h3geo.org/docs/api/hierarchy#childpostocell) | ⚠️ Not yet available |
+| [`cellToChildrenSize`](https://h3geo.org/docs/api/hierarchy#celltochildrensize) | `try cell.children(at: .res12).count` |
+| [`cellToCenterChild`](https://h3geo.org/docs/api/hierarchy#celltocenterchild) | `try cell.children(at: .res12).center` |
+| [`cellToChildPos`](https://h3geo.org/docs/api/hierarchy#celltochildpos) | `try parentCell.children(at: .res12).index(of: childCell)` |
+| [`childPosToCell`](https://h3geo.org/docs/api/hierarchy#childpostocell) | `try cell.children(at: .res12)[23]` |
 | [`compactCells`](https://h3geo.org/docs/api/hierarchy#compactcells) | `try [cell1, ..., cell50].compacted` |
 | [`uncompactCells`](https://h3geo.org/docs/api/hierarchy#uncompactcells) | `try [cell1, cell2, cell3].uncompacted(at: .res8)` |
 | [`uncompactCellsSize`](https://h3geo.org/docs/api/hierarchy#uncompactcellssize) | *This function exists for memory management and is not exposed.* |
@@ -115,7 +115,7 @@ Go to *File* > *Add Package Dependencies...* and enter `https://github.com/pawel
 | [`isValidDirectedEdge`](https://h3geo.org/docs/api/uniedge#isvaliddirectededge) | `directedEdge.isValid` |
 | [`getDirectedEdgeOrigin`](https://h3geo.org/docs/api/uniedge#getdirectededgeorigin) | `try directedEdge.origin` |
 | [`getDirectedEdgeDestination`](https://h3geo.org/docs/api/uniedge#getdirectededgedestination) | `try directedEdge.destination` |
-| [`directedEdgeToCells`](https://h3geo.org/docs/api/uniedge#directededgetocells) | This function is not exposed, use `try (directedEdge.origin, directedEdge.destination)` |
+| [`directedEdgeToCells`](https://h3geo.org/docs/api/uniedge#directededgetocells) | Not exposed. Use `try (directedEdge.origin, directedEdge.destination)`. |
 | [`originToDirectedEdges`](https://h3geo.org/docs/api/uniedge#origintodirectededges) | `try originCell.directedEdges` |
 | [`directedEdgeToBoundary`](https://h3geo.org/docs/api/uniedge#directededgetoboundary) | `try directedEdge.boundary` |
 

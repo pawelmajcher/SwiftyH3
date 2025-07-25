@@ -55,11 +55,11 @@ struct CellTests {
             H3Cell("862834737ffffff")!,
         ]
 
-        #expect(try cell.children(at: .res6) == cellChildren)
+        #expect(try Array(cell.children()) == cellChildren)
     }
 
     @Test func cellToChildrenSize() throws(SwiftyH3Error) {
-        #expect(try cell.childrenSize(at: .res6) == 7)
+        #expect(try cell.children(at: .res6).count == 7)
     }
 
     @Test func cellToVertex() throws(SwiftyH3Error) {
