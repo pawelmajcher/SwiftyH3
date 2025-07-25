@@ -156,7 +156,45 @@ Go to *File* > *Add Package Dependencies...* and enter `https://github.com/pawel
 
 > [!NOTE]
 > The `Measurement<UnitType>` types and `LocalizedError` protocol, including related
-> methods and properties, are part of `Foundation`. `import Foundation` to use them.
+> methods and properties, are part of `Foundation`. Include `import Foundation` to use them.
+
+## Core Location and MapKit support
+
+### CLLocationCoordinate2D
+
+You can convert an `H3LatLng` value to `CLLocationCoordinate2D` and vice versa using initializers or computed properties.
+
+```swift
+// H3LatLng ➡️ CLLocationCoordinate2D
+let coordinateFromProperty: CLLocationCoordinate2D = H3LatLng(latitudeDegs: 37.7955, longitudeDegs: -122.3937).coordinates
+let coordinateFromInitializer = CLLocationCoordinate2D(H3LatLng(latitudeDegs: 37.7955, longitudeDegs: -122.3937))
+
+// CLLocationCoordinate2D ➡️ H3LatLng
+let h3LatLngFromProperty: H3LatLng = CLLocationCoordinate2D(latitude: 37.7955, longitude: -122.3937).h3LatLng
+let h3LatLngFromInitializer = H3LatLng(CLLocationCoordinate2D(latitude: 37.7955, longitude: -122.3937))
+```
+
+### MKPolygon and MKMultiPolygon
+
+You can create an `MKPolygon` with an initializer taking `[H3LatLng]` (`H3Loop`) or `H3Polygon` values. Analogically, you can initialize `MKMultiPolygon` with `[H3MultiPolygon]` (`MKMultiPolygon`) array.
+
+```swift
+// H3 with MapKit for SwiftUI example
+
+import SwiftUI
+import MapKit
+import SwiftyH3
+
+struct H3CellMapExampleView: View {
+    let cellBoundary = try! H3LatLng(latitudeDegs: 37.7955, longitudeDegs: -122.3937).cell(at: .res4).boundary
+    
+    var body: some View {
+        Map {
+            MapPolygon(MKPolygon(cellBoundary))
+        }
+    }
+}
+```
 
 ## License
 
