@@ -228,7 +228,7 @@ struct CellMoreTests {
     @Test func cellToParent() throws {
         let parent = H3Cell("832834fffffffff")!
 
-        #expect(try cell.parent(times: 3) == parent)
+        #expect(try cell.parent(at: .res3) == parent)
     }
 }
 
