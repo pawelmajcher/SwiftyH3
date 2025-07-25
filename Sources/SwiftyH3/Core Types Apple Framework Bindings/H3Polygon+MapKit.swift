@@ -13,7 +13,7 @@ public extension MKPolygon {
 public extension MKPolygon {
     convenience init(_ polygon: H3Polygon) {
         var boundaryCoordinateLoop = polygon.boundary.map { h3latlng in h3latlng.coordinates }
-        let holePolygons = !polygon.holes.isEmpty ? polygon.holes.map { hole in MKPolygon(from: hole) } : nil
+        let holePolygons = !polygon.holes.isEmpty ? polygon.holes.map { hole in MKPolygon(hole) } : nil
 
         self.init(coordinates: &boundaryCoordinateLoop, count: boundaryCoordinateLoop.count, interiorPolygons: holePolygons)
     }
