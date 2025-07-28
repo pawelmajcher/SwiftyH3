@@ -163,7 +163,7 @@ Go to *File* > *Add Package Dependencies...* and enter `https://github.com/pawel
 
 ### CLLocationCoordinate2D
 
-You can convert an `H3LatLng` value to `CLLocationCoordinate2D` and vice versa using initializers or computed properties.
+You can convert an [`H3LatLng`](https://swiftpackageindex.com/pawelmajcher/swiftyh3/0.4.1/documentation/swiftyh3/h3latlng) value to [`CLLocationCoordinate2D`](https://developer.apple.com/documentation/corelocation/cllocationcoordinate2d) and vice versa using initializers or computed properties.
 
 ```swift
 // H3LatLng ➡️ CLLocationCoordinate2D
@@ -177,7 +177,7 @@ let h3LatLngFromInitializer = H3LatLng(CLLocationCoordinate2D(latitude: 37.7955,
 
 ### MKPolygon and MKMultiPolygon
 
-You can create an `MKPolygon` with an initializer taking `[H3LatLng]` (`H3Loop`) or `H3Polygon` values. Analogically, you can initialize `MKMultiPolygon` with `[H3Polygon]` (`H3MultiPolygon`) array.
+You can create an [`MKPolygon`](https://developer.apple.com/documentation/mapkit/mkpolygon) with an initializer taking [`[H3LatLng]`](https://swiftpackageindex.com/pawelmajcher/swiftyh3/0.4.1/documentation/swiftyh3/h3loop) or [`H3Polygon`](https://swiftpackageindex.com/pawelmajcher/swiftyh3/0.4.1/documentation/swiftyh3/h3polygon) values. Analogically, you can initialize [`MKMultiPolygon`](https://developer.apple.com/documentation/mapkit/mkmultipolygon) with [`[H3Polygon]`](https://swiftpackageindex.com/pawelmajcher/swiftyh3/0.4.1/documentation/swiftyh3/h3multipolygon) array.
 
 ```swift
 // H3 with MapKit for SwiftUI example
