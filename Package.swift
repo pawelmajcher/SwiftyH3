@@ -1,4 +1,4 @@
-// swift-tools-version: 6.1
+// swift-tools-version: 5.10
 
 import PackageDescription
 
@@ -21,5 +21,6 @@ let package = Package(
             name: "SwiftyH3Tests",
             dependencies: ["SwiftyH3"]
         ),
-    ]
+    ],
+    swiftLanguageVersions: [.version("6"), .v5]
 )
