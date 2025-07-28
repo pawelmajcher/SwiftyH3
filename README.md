@@ -1,5 +1,7 @@
 
-# SwiftyH3
+# SwiftyH3 ⬡
+
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpawelmajcher%2FSwiftyH3%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/pawelmajcher/SwiftyH3)
 
 **The Swifty way to use [Uber's H3 geospatial indexing system](https://h3geo.org/).**
 
@@ -132,8 +134,8 @@ Go to *File* > *Add Package Dependencies...* and enter `https://github.com/pawel
 
 | H3 C function | Example SwiftyH3 code |
 | :---: | :--- |
-| [`degsToRads`](https://h3geo.org/docs/api/misc#degstorads) | `Measurement<UnitAngle>(value: 23, unit: .degrees).converted(to: .radians).value` |
-| [`radsToDegs`](https://h3geo.org/docs/api/misc#radstodegs) | `Measurement<UnitAngle>(value: 1.2, unit: .radians).converted(to: .degrees).value` |
+| [`degsToRads`](https://h3geo.org/docs/api/misc#degstorads) | Not exposed. Use `Measurement<UnitAngle>(value: 23, unit: .degrees).converted(to: .radians).value`. |
+| [`radsToDegs`](https://h3geo.org/docs/api/misc#radstodegs) | Not exposed. Use `Measurement<UnitAngle>(value: 1.2, unit: .radians).converted(to: .degrees).value`. |
 | [`getHexagonAreaAvgKm2`](https://h3geo.org/docs/api/misc#gethexagonareaavgkm2) | `H3CellResolution.res8.averageHexagonArea.converted(to: .squareKilometers).value` |
 | [`getHexagonAreaAvgM2`](https://h3geo.org/docs/api/misc#gethexagonareaavgm2) | `H3CellResolution.res8.averageHexagonArea.value` |
 | [`cellAreaRads2`](https://h3geo.org/docs/api/misc#cellarearads2) | `try cell.areaRads2` |

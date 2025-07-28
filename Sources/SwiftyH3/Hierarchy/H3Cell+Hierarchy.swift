@@ -10,7 +10,7 @@ extension H3Cell {
     /// 
     /// Call to the function without this parameter or with `nil` value
     /// returns the immediate parent.
-    public func parent(at parentRes: H3CellResolution? = nil) throws(SwiftyH3Error) -> H3Cell {
+    public func parent(at parentRes: Resolution? = nil) throws(SwiftyH3Error) -> H3Cell {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         
         let resolution = try self.resolution
@@ -46,22 +46,22 @@ extension H3Cell {
     /// 
     /// Call to the function without this parameter or with `nil` value
     /// returns the array of seven immediate children.
-    public func children(at childRes: H3CellResolution? = nil) throws(SwiftyH3Error) -> H3CellChildrenCollection {
+    public func children(at childRes: Resolution? = nil) throws(SwiftyH3Error) -> H3Cell.ChildrenCollection {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         let resolution = try self.resolution
         guard
             let childRes = childRes ?? resolution.finer()
         else { throw SwiftyH3Error.invalidInput }
 
-        return try H3CellChildrenCollection(parent: self, resolution: childRes)
+        return try H3Cell.ChildrenCollection(parent: self, resolution: childRes)
     }
 
     /// The immediate children of the cell.
     /// 
     /// Returns nil for resolution 15 cells (no children),
     /// an otherwise invalid input or any other error. 
-    /// For a throwing implementation, call `children()`.
-    public var children: H3CellChildrenCollection? {
+    /// For a throwing implementation, call ``H3Cell/children(at:)``.
+    public var children: H3Cell.ChildrenCollection? {
         return try? self.children()
     }
 }

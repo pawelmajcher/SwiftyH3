@@ -2,7 +2,7 @@
 import Ch3
 
 extension H3Polygon {
-    internal func maxCellsSize(at resolution: H3CellResolution) throws(SwiftyH3Error) -> Int64 {
+    internal func maxCellsSize(at resolution: H3Cell.Resolution) throws(SwiftyH3Error) -> Int64 {
         let (size, h3error) = self.withGeoPolygon { geoPolygon in
             withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
                 var size: Int64 = 0
@@ -18,7 +18,7 @@ extension H3Polygon {
         return size
     }
 
-    internal func maxCellsSizeExperimental(at resolution: H3CellResolution, for containmentType: H3CellContainmentType) throws(SwiftyH3Error) -> Int64 {
+    internal func maxCellsSizeExperimental(at resolution: H3Cell.Resolution, for containmentType: H3Cell.ContainmentType) throws(SwiftyH3Error) -> Int64 {
         let (size, h3error) = self.withGeoPolygon { geoPolygon in
             withUnsafePointer(to: geoPolygon) { geoPolygonPointer in
                 var size: Int64 = 0
@@ -48,7 +48,7 @@ extension H3Polygon {
     /// - Parameter resolution: The target cell resolution.
     /// 
     /// - Returns: An array with generated cells at given resolution.
-    public func cells(at resolution: H3CellResolution) throws(SwiftyH3Error) -> [H3Cell] {
+    public func cells(at resolution: H3Cell.Resolution) throws(SwiftyH3Error) -> [H3Cell] {
         let maxSize = try self.maxCellsSize(at: resolution)
 
         var indexArray = Array<UInt64>(repeating: 0, count: Int(maxSize))
@@ -78,7 +78,7 @@ extension H3Polygon {
     /// - Parameter containmentType: The containment mode to be used by the algorithm.
     /// 
     /// - Returns: An array with generated cells at given resolution.
-    public func cellsExperimental(at resolution: H3CellResolution, containmentType: H3CellContainmentType = .center) throws(SwiftyH3Error) -> [H3Cell] {
+    public func cellsExperimental(at resolution: H3Cell.Resolution, containmentType: H3Cell.ContainmentType = .center) throws(SwiftyH3Error) -> [H3Cell] {
         let maxSize = try self.maxCellsSizeExperimental(at: resolution, for: containmentType)
 
         var indexArray = Array<UInt64>(repeating: 0, count: Int(maxSize))

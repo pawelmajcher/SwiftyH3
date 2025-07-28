@@ -2,7 +2,7 @@
 public enum SwiftyH3Error: Error, Equatable {
     /// An error returned from the H3 library with associated error code.
     /// 
-    /// Use the `errorDescription` property of the error or refer to the
+    /// Use the ``errorDescription`` property of the error or refer to the
     /// [table of error codes](https://h3geo.org/docs/library/errors#table-of-error-codes)
     /// in the library documentation.
     case H3Error(UInt32)

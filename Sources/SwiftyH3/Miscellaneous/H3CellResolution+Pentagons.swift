@@ -1,7 +1,7 @@
 
 import Ch3
 
-public extension H3CellResolution {
+public extension H3Cell.Resolution {
     /// All pentagon cells for the resolution.
     var pentagons: [H3Cell] {
         get {

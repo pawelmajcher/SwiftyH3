@@ -5,10 +5,10 @@ public extension H3LatLng {
     var latitude: Measurement<UnitAngle> { Measurement(value: latitudeRads, unit: .radians) }
     var longitude: Measurement<UnitAngle> { Measurement(value: longitudeRads, unit: .radians) }
 
-    // Latitude in degrees.
+    /// Latitude in degrees.
     var latitudeDegs: Double { self.latitude.converted(to: .degrees).value }
 
-    // Longitude in degrees.
+    /// Longitude in degrees.
     var longitudeDegs: Double { self.longitude.converted(to: .degrees).value }
 }
 

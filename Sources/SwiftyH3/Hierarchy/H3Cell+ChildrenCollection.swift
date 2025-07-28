@@ -1,33 +1,35 @@
 
 import Ch3
 
-/// A random access collection of all children of the parent cell at a given resolution.
-/// 
-/// You do not initialize values of this type yourself. You can obtain them by calling
-/// `parentCell.children(at: ...)` instead.
-/// 
-/// You can use values of this type like an Array, iterating over it, applying `.map`
-/// and accessing children cells at given positions through subscripts.
-/// 
-/// If you need to mutate the values, you can initialize an array from this value with
-/// `Array(childrenCollection)`.
-public struct H3CellChildrenCollection: Hashable, Sendable {
-    /// The parent cell of a collection of children.
-    public let parent: H3Cell
+extension H3Cell {
+    /// A random access collection of all children of the parent cell at a given resolution.
+    /// 
+    /// You do not initialize values of this type yourself. You can obtain them by calling
+    /// ``H3Cell/children(at:)`` on a parent cell instead.
+    /// 
+    /// You can use values of this type like an Array, iterating over it, applying `.map`
+    /// and accessing children cells at given positions through subscripts.
+    /// 
+    /// If you need to mutate the values, you can initialize an array from this value with
+    /// `Array(childrenCollection)`.
+    public struct ChildrenCollection: Hashable, Sendable {
+        /// The parent cell of a collection of children.
+        public let parent: H3Cell
 
-    /// The resolution of the children cells.
-    public let resolution: H3CellResolution
+        /// The resolution of the children cells.
+        public let resolution: H3Cell.Resolution
 
-    internal init(parent: H3Cell, resolution: H3CellResolution) throws(SwiftyH3Error) {
-        guard parent.isValid else { throw SwiftyH3Error.invalidInput }
-        guard let parentRes = try? parent.resolution, resolution.rawValue > parentRes.rawValue else { throw SwiftyH3Error.invalidInput }
+        internal init(parent: H3Cell, resolution: H3Cell.Resolution) throws(SwiftyH3Error) {
+            guard parent.isValid else { throw SwiftyH3Error.invalidInput }
+            guard let parentRes = try? parent.resolution, resolution.rawValue > parentRes.rawValue else { throw SwiftyH3Error.invalidInput }
 
-        self.parent = parent
-        self.resolution = resolution
+            self.parent = parent
+            self.resolution = resolution
+        }
     }
 }
 
-extension H3CellChildrenCollection: RandomAccessCollection {
+extension H3Cell.ChildrenCollection: RandomAccessCollection {
     public var startIndex: Int64 { 0 }
     public var endIndex: Int64 { (try? parent.childrenSize(at: resolution)) ?? 0 }
     
@@ -38,7 +40,7 @@ extension H3CellChildrenCollection: RandomAccessCollection {
     }
 }
 
-extension H3CellChildrenCollection {
+extension H3Cell.ChildrenCollection {
     /// The center child in the collection.
     public var center: H3Cell {
         try! parent.centerChild(at: resolution)
@@ -59,7 +61,7 @@ extension H3CellChildrenCollection {
 }
 
 internal extension H3Cell {
-    func childrenSize(at childRes: H3CellResolution) throws(SwiftyH3Error) -> Int64 {
+    func childrenSize(at childRes: Resolution) throws(SwiftyH3Error) -> Int64 {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
 
         var childrenSize: Int64 = -1
@@ -71,7 +73,7 @@ internal extension H3Cell {
         return childrenSize
     }
 
-    func centerChild(at childRes: H3CellResolution? = nil) throws(SwiftyH3Error) -> H3Cell {
+    func centerChild(at childRes: Resolution? = nil) throws(SwiftyH3Error) -> H3Cell {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         let resolution = try self.resolution
         guard
@@ -90,7 +92,7 @@ internal extension H3Cell {
         return try? self.centerChild()
     }
 
-    func child(at childRes: H3CellResolution? = nil, position childPos: Int64) throws(SwiftyH3Error) -> H3Cell {
+    func child(at childRes: Resolution? = nil, position childPos: Int64) throws(SwiftyH3Error) -> H3Cell {
         guard self.isValid else { throw SwiftyH3Error.invalidInput }
         let resolution = try self.resolution
         guard

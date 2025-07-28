@@ -1,8 +1,7 @@
 
 import Ch3
 
-public extension H3Indexable {
-    /// The H3 index's string representation.
+internal extension H3Indexable {
     var h3String: String {
         get throws(SwiftyH3Error) {
             let h3StringBufferSize = 17
@@ -35,7 +34,7 @@ internal extension String {
     }
 }
 
-extension H3Cell: LosslessStringConvertible {
+extension H3Cell {
     public var description: String { try! self.h3String }
 
     public init?(_ h3String: String) {
@@ -43,7 +42,7 @@ extension H3Cell: LosslessStringConvertible {
     }
 }
 
-extension H3DirectedEdge: LosslessStringConvertible {
+extension H3DirectedEdge {
     public var description: String { try! self.h3String }
 
     public init?(_ h3String: String) {
@@ -51,7 +50,7 @@ extension H3DirectedEdge: LosslessStringConvertible {
     }
 }
 
-extension H3Vertex: LosslessStringConvertible {
+extension H3Vertex {
     public var description: String { try! self.h3String }
 
     public init?(_ h3String: String) {

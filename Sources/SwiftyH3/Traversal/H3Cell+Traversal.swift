@@ -104,9 +104,9 @@ extension H3Cell {
     /// Paths exist in the H3 grid of cells, and may not align closely with
     /// either Cartesian lines or great arcs.
     /// 
-    /// - Parameter destination: The destination `H3Cell`.
+    /// - Parameter destination: The destination ``SwiftyH3/H3Cell``.
     /// 
-    /// - Throws: `SwiftyH3Error.H3Error(Int32)` if the cells are very far apart,
+    /// - Throws: ``SwiftyH3Error/H3Error(_:)`` if the cells are very far apart,
     /// or if the cells are on opposite sides of a pentagon. Refer to the
     /// [table of error codes](https://h3geo.org/docs/library/errors#table-of-error-codes)
     /// for more.
