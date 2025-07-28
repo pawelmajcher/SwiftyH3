@@ -177,7 +177,7 @@ let h3LatLngFromInitializer = H3LatLng(CLLocationCoordinate2D(latitude: 37.7955,
 
 ### MKPolygon and MKMultiPolygon
 
-You can create an `MKPolygon` with an initializer taking `[H3LatLng]` (`H3Loop`) or `H3Polygon` values. Analogically, you can initialize `MKMultiPolygon` with `[H3MultiPolygon]` (`MKMultiPolygon`) array.
+You can create an `MKPolygon` with an initializer taking `[H3LatLng]` (`H3Loop`) or `H3Polygon` values. Analogically, you can initialize `MKMultiPolygon` with `[H3Polygon]` (`MKMultiPolygon`) array.
 
 ```swift
 // H3 with MapKit for SwiftUI example
