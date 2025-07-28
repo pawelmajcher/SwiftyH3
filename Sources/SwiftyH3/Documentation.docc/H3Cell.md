@@ -17,7 +17,7 @@
 - ``H3Indexable/resolution``
 - ``H3Indexable/baseCellNumber``
 - ``H3Indexable/description``
-- ``H3Indexable/isValid``
+- ``H3Cell/isValid``
 - ``isResClassIII``
 - ``isPentagon``
 

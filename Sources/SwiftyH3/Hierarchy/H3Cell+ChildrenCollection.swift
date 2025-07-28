@@ -7,11 +7,14 @@ extension H3Cell {
     /// You do not initialize values of this type yourself. You can obtain them by calling
     /// ``H3Cell/children(at:)`` on a parent cell instead.
     /// 
-    /// You can use values of this type like an Array, iterating over it, applying `.map`
-    /// and accessing children cells at given positions through subscripts.
+    /// You can use values of this type like an array, iterating over it, applying `.map`
+    /// and accessing children cells at given positions through subscripts. The children
+    /// values are initialized lazily only when they are iterated over or otherwise
+    /// accessed. This is meant to improve performance in large collections, when
+    /// there is a big difference between parent and children resolution.
     /// 
-    /// If you need to mutate the values, you can initialize an array from this value with
-    /// `Array(childrenCollection)`.
+    /// If you want to mutate the values or need to load the indexes of all children into
+    /// memory, you can use an array initializer on a value of this type.
     public struct ChildrenCollection: Hashable, Sendable {
         /// The parent cell of a collection of children.
         public let parent: H3Cell
@@ -46,6 +49,10 @@ extension H3Cell.ChildrenCollection {
         try! parent.centerChild(at: resolution)
     }
 
+    /// Returns the position of the child cell within this collection.
+    /// 
+    /// Throws an error when the cell provided in the argument is not
+    /// a part of the collection.
     public func index(of childCell: H3Cell) throws(SwiftyH3Error) -> Int64 {
         guard childCell.isValid else { throw SwiftyH3Error.invalidInput }
         guard try childCell.resolution == self.resolution else { throw SwiftyH3Error.invalidInput }
