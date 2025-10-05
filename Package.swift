@@ -9,10 +9,10 @@ let package = Package(
             name: "SwiftyH3",
             targets: ["SwiftyH3"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/pawelmajcher/Ch3.git", from: "4.3.0")
-    ],
     targets: [
+        .target(
+            name: "Ch3"
+        ),
         .target(
             name: "SwiftyH3",
             dependencies: ["Ch3"]
