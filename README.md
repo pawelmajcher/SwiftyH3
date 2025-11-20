@@ -200,5 +200,4 @@ struct H3CellMapExampleView: View {
 ## License
 
 - SwiftyH3 (this repository) is licensed under the [Apache 2.0 license](LICENSE).
-- Ch3 (with raw bindings and additional maintenance code) is licensed under the [MIT License](https://github.com/pawelmajcher/Ch3/blob/master/LICENSE).
 - Uber's H3 library is licensed under the [Apache 2.0 license](https://github.com/uber/h3/blob/master/LICENSE).
