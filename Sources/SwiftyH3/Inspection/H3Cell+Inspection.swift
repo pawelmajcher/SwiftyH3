@@ -30,6 +30,12 @@ public extension H3Cell {
     ///   `digits[i]` corresponds to the digit at resolution `i+1`. The
     ///   resolution of the cell is defined by the length of this array.
     ///   The default empty array creates a resolution 0 cell.
+    /// 
+    /// - Throws: ``SwiftyH3Error/H3Error(_:)`` if the provided components
+    ///   would not create a valid cell. Note that when constructing a cell
+    ///   from a pentagon base cell, digit `1` is
+    ///   [not allowed to follow](https://h3geo.org/docs/library/index/cell)
+    ///   immediately after a sequence of zeroes.
     init(
         base baseCellNumber: Int32,
         _ digits: [Int32] = []
