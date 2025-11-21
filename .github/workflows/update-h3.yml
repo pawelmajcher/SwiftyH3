@@ -16,7 +16,8 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout SwiftyH3
@@ -54,16 +55,6 @@ jobs:
             export *
           }
           EOF
-      
-  create-pull-request:
-    runs-on: ubuntu-latest
-    needs: perform-update
-
-    permissions:
-      contents: write
-      pull-requests: write
-
-    steps:
       - name: Create a pull request
         uses: peter-evans/create-pull-request@v7
         with:
