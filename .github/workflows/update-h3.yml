@@ -1,0 +1,67 @@
+
+name: Create pull request for H3 library version update
+
+run-name: Update the H3 library code to ${{ inputs.release_tag }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Release tag in uber/h3 to update to
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-h3:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout SwiftyH3
+        uses: actions/checkout@v6
+        with:
+          path: SwiftyH3
+
+      - name: Remove the existing version of H3 library
+        run: |
+          rm -rf SwiftyH3/Sources/Ch3/*
+          mkdir -p SwiftyH3/Sources/Ch3/include
+
+      - name: Checkout H3 @ ${{ inputs.release_tag }}
+        uses: actions/checkout@v6
+        with:
+          repository: uber/h3
+          ref: refs/tags/${{ inputs.release_tag }}
+          sparse-checkout: src/h3lib
+          path: H3
+
+      - name: Copy the new version of H3 library into SwiftyH3 source
+        # Note: h3api.h.in can be copied in as a main header,
+        #  because the version macros in the file are ignored by clang
+        run: |
+          cp H3/src/h3lib/lib/*.c SwiftyH3/Sources/Ch3/
+          cp H3/src/h3lib/include/*.h SwiftyH3/Sources/Ch3/include/
+          cp H3/src/h3lib/include/h3api.h.in SwiftyH3/Sources/Ch3/include/h3api.h
+
+      - name: Recreate module.modulemap
+        working-directory: SwiftyH3/Sources/Ch3/include
+        run: |
+          cat > module.modulemap <<'EOF'
+          module Ch3 {
+            header "h3api.h"
+            export *
+          }
+          EOF
+      
+      - name: Create a pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: Update the H3 library code to ${{ inputs.release_tag }}
+          commit-message: Update the H3 library code to ${{ inputs.release_tag }}
+          path: SwiftyH3
+          branch: update-h3-action/${{ inputs.release_tag }}
+          sign-commits: true
+          reviewers: pawelmajcher
