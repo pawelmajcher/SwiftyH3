@@ -2,6 +2,18 @@
 import Ch3
 
 public extension H3Indexable {
+    /// `true` if this is a valid H3 index and `false` otherwise.
+    /// 
+    /// > Note: This will return `true` even if most functions will throw due to a type
+    /// mismatch, for example if the value of the index is a representation of a directed edge,
+    /// and the defined structure is an ``H3Cell``. In most cases you will want to use ``isValid``
+    /// to check validity for a given type instead.
+    var isSomeH3Index: Bool {
+        return Ch3.isValidIndex(self.id) != 0
+    }
+}
+
+public extension H3Indexable {
     /// The resolution of the cell associated with this index.
     var resolution: H3Cell.Resolution {
         get throws(SwiftyH3Error) {
