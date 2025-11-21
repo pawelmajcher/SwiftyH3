@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.2
 
 import PackageDescription
 
@@ -11,7 +11,11 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Ch3"
+            name: "Ch3",
+             cSettings: [
+                 // M_PI and M_PI_2 are defined ambiguously in v4.4.1 of H3
+                 .disableWarning("ambiguous-macro")
+             ]
         ),
         .target(
             name: "SwiftyH3",
@@ -21,6 +25,5 @@ let package = Package(
             name: "SwiftyH3Tests",
             dependencies: ["SwiftyH3"]
         ),
-    ],
-    swiftLanguageVersions: [.version("6"), .v5]
+    ]
 )
