@@ -13,6 +13,8 @@ on:
 
 jobs:
   perform-update:
+    name: Perform the update
+
     runs-on: ubuntu-latest
 
     permissions:
@@ -21,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout SwiftyH3
-        uses: actions/checkout@v6
+        uses: actions/checkout@v5
         with:
           path: SwiftyH3
 
@@ -31,7 +33,7 @@ jobs:
           mkdir -p SwiftyH3/Sources/Ch3/include
 
       - name: Checkout H3 @ ${{ inputs.release_tag }}
-        uses: actions/checkout@v6
+        uses: actions/checkout@v5
         with:
           repository: uber/h3
           ref: refs/tags/${{ inputs.release_tag }}
