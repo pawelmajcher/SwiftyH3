@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           path: SwiftyH3
+          persist-credentials: false
 
       - name: Remove the existing version of H3 library
         run: |
@@ -37,6 +38,7 @@ jobs:
           ref: refs/tags/${{ inputs.release_tag }}
           sparse-checkout: src/h3lib
           path: H3
+          persist-credentials: false
 
       - name: Copy the new version of H3 library into SwiftyH3 source
         # Note: h3api.h.in can be copied in as a main header,
