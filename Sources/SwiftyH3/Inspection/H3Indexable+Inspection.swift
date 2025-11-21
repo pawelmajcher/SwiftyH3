@@ -34,8 +34,13 @@ public extension H3Indexable {
 }
 
 public extension H3Indexable {
-    /// Returns an indexing digit for a given resolution from 1 to 15
-    /// or ``baseCellNumber`` for ``H3Cell.Resolution.res0``.
+    /// Returns an indexing digit for a given resolution.
+    /// 
+    /// - Returns: A 0–6 value for used index digits from 1 to 15 and
+    /// ``baseCellNumber`` for ``H3Cell.Resolution.res0``.
+    /// 
+    /// In valid indexes, this function returns an unused index digit (`7`)
+    /// for resolutions finer than ``resolution``.
     func digit(for resolution: H3Cell.Resolution) throws(SwiftyH3Error) -> Int32 {
         guard resolution != .res0 else { return baseCellNumber }
 
