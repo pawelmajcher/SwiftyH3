@@ -17,3 +17,36 @@ public extension H3Cell {
         return Ch3.isPentagon(self.id) != 0
     }
 }
+
+public extension H3Cell {
+    /// Initialize an H3Cell from a base cell and an array of indexing digits.
+    /// 
+    /// This initializer only allows for constructing valid H3 cells,
+    /// and will return an error if the provided components would create
+    /// an invalid cell.
+    /// 
+    /// - Parameter baseCellNumber: Base cell number of the cell. (0–121)
+    /// - Parameter digits: An array of indexing digits (0–6). Each element
+    ///   `digits[i]` corresponds to the digit at resolution `i+1`. The
+    ///   resolution of the cell is defined by the length of this array.
+    ///   The default empty array creates a resolution 0 cell.
+    init(
+        base baseCellNumber: Int32,
+        _ digits: [Int32] = []
+    ) throws(SwiftyH3Error) {
+        var cellId: UInt64 = 0
+        let h3error = digits.withUnsafeBufferPointer { pointer in
+            Ch3.constructCell(
+                Int32(pointer.count),
+                baseCellNumber,
+                pointer.baseAddress,
+                &cellId
+            )
+        }
+
+        guard h3error == 0 else { throw SwiftyH3Error.H3Error(h3error) }
+        guard cellId != 0 else { throw SwiftyH3Error.returnedInvalidValue }
+
+        self.init(cellId)
+    }
+}
