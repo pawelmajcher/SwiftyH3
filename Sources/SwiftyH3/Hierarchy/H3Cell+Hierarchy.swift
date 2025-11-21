@@ -30,7 +30,7 @@ extension H3Cell {
     /// The immediate ancestor (parent) of the cell.
     /// 
     /// Returns `nil` for resolution 0 cells and other invalid inputs.
-    /// For a throwing implementation, call ``H3Cell\parent(at:)``.
+    /// For a throwing implementation, call ``H3Cell/parent(at:)``.
     public var parent: H3Cell? {
         return try? self.parent()
     }

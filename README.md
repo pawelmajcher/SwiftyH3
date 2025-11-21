@@ -53,12 +53,12 @@ Go to *File* > *Add Package Dependencies...* and enter `https://github.com/pawel
 | :---: | :--- | :---: |
 | [`getResolution`](https://h3geo.org/docs/api/inspection#getresolution) | `try H3DirectedEdge("115283473fffffff")!.resolution` | [📖](https://swiftpackageindex.com/pawelmajcher/swiftyh3/0.4.1/documentation/swiftyh3/h3indexable/resolution) |
 | [`getBaseCellNumber`](https://h3geo.org/docs/api/inspection#getbasecellnumber) | `try H3Vertex("22528340bfffffff")!.baseCellNumber` | [📖](https://swiftpackageindex.com/pawelmajcher/swiftyh3/0.4.1/documentation/swiftyh3/h3indexable/basecellnumber) |
-| [`getIndexDigit`](https://h3geo.org/docs/api/inspection#getindexdigit) | ⚠️ Not yet available | |
-| [`constructCell`](https://h3geo.org/docs/api/inspection/#constructcell) | ⚠️ Not yet available | |
+| [`getIndexDigit`](https://h3geo.org/docs/api/inspection#getindexdigit) | `try H3Vertex("22528340bfffffff")!.digit(for: .res2)` | ⏳ |
+| [`constructCell`](https://h3geo.org/docs/api/inspection/#constructcell) | `try H3Cell(base: 20, [0, 6, 0, 4, 0, 5])` | ⏳ |
 | [`stringToH3`](https://h3geo.org/docs/api/inspection#stringtoh3) | `H3Cell("8a283082a677fff")!` | [📖](https://swiftpackageindex.com/pawelmajcher/swiftyh3/0.4.1/documentation/swiftyh3/h3indexable/init(_:)-8n6gi) |
 | [`h3ToString`](https://h3geo.org/docs/api/inspection#h3tostring) | `try H3Cell(599686042433355775).description` | [📖](https://swiftpackageindex.com/pawelmajcher/swiftyh3/0.4.1/documentation/swiftyh3/h3indexable/description) |
 | [`isValidCell`](https://h3geo.org/docs/api/inspection#isvalidcell) | `cell.isValid` | [📖](https://swiftpackageindex.com/pawelmajcher/swiftyh3/0.4.1/documentation/swiftyh3/h3cell/isvalid) |
-| [`isValidIndex`](https://h3geo.org/docs/api/inspection/#isvalidindex) | ⚠️ Not yet available | |
+| [`isValidIndex`](https://h3geo.org/docs/api/inspection/#isvalidindex) | `cell` | ⏳ |
 | [`isResClassIII`](https://h3geo.org/docs/api/inspection#isresclassiii) | `cell.isResClassIII` | [📖](https://swiftpackageindex.com/pawelmajcher/swiftyh3/0.4.1/documentation/swiftyh3/h3cell/isresclassiii) |
 | [`isPentagon`](https://h3geo.org/docs/api/inspection#ispentagon) | `cell.isPentagon` | [📖](https://swiftpackageindex.com/pawelmajcher/swiftyh3/0.4.1/documentation/swiftyh3/h3cell/ispentagon) |
 | [`getIcosahedronFaces`](https://h3geo.org/docs/api/inspection#geticosahedronfaces) | ⚠️ Not yet available |
