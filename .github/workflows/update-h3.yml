@@ -11,20 +11,18 @@ on:
         required: true
         type: string
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
-  update-h3:
+  perform-update:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout SwiftyH3
         uses: actions/checkout@v6
         with:
           path: SwiftyH3
-          persist-credentials: false
 
       - name: Remove the existing version of H3 library
         run: |
@@ -38,7 +36,6 @@ jobs:
           ref: refs/tags/${{ inputs.release_tag }}
           sparse-checkout: src/h3lib
           path: H3
-          persist-credentials: false
 
       - name: Copy the new version of H3 library into SwiftyH3 source
         # Note: h3api.h.in can be copied in as a main header,
@@ -58,6 +55,15 @@ jobs:
           }
           EOF
       
+  create-pull-request:
+    runs-on: ubuntu-latest
+    needs: perform-update
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
       - name: Create a pull request
         uses: peter-evans/create-pull-request@v7
         with:
@@ -65,5 +71,4 @@ jobs:
           commit-message: Update the H3 library code to ${{ inputs.release_tag }}
           path: SwiftyH3
           branch: update-h3-action/${{ inputs.release_tag }}
-          sign-commits: true
           reviewers: pawelmajcher
