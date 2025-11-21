@@ -6,6 +6,7 @@
 
 - ``init(_:)-(UInt64)``
 - ``H3Indexable/init(_:)-(String)``
+- ``init(base:_:)``
 
 ### Indexing
 
@@ -14,9 +15,11 @@
 
 ### Inspection
 
+- ``H3Indexable/description``
 - ``H3Indexable/resolution``
 - ``H3Indexable/baseCellNumber``
-- ``H3Indexable/description``
+- ``H3Indexable/digit(for:)``
+- ``H3Indexable/isSomeH3Index``
 - ``H3Cell/isValid``
 - ``isResClassIII``
 - ``isPentagon``
