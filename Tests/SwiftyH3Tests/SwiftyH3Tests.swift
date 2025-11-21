@@ -148,6 +148,30 @@ struct CellTests {
         #expect(H3Cell("85283473ffff") == nil)
     }
 
+    @Test func isSomeH3Index() throws(SwiftyH3Error) {
+        #expect(H3Vertex(cell.id).isSomeH3Index)
+        #expect(!H3Vertex(cell.id).isValid)
+    }
+
+    @Test func constructCell() throws(SwiftyH3Error) {
+        #expect(
+            try cell == H3Cell(
+                base: 20,
+                [0, 6, 4, 3, 4]
+            )
+        )
+    }
+
+    @Test func cellDigits() throws(SwiftyH3Error) {
+        #expect(try cell.digit(for: .res0) == 20)
+        #expect(try cell.digit(for: .res1) == 0)
+        #expect(try cell.digit(for: .res2) == 6)
+        #expect(try cell.digit(for: .res3) == 4)
+        #expect(try cell.digit(for: .res4) == 3)
+        #expect(try cell.digit(for: .res5) == 4)
+        #expect(try cell.digit(for: .res6) == 7)
+    }
+
     @Test func originToDirectedEdges() throws(SwiftyH3Error) {
         let edges = [
             H3DirectedEdge("115283473fffffff")!,
