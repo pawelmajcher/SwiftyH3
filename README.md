@@ -30,7 +30,7 @@ let bounds: [H3LatLng] = try! cell.boundary
 Add the following line to your package's `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/pawelmajcher/SwiftyH3.git", "0.5.0"..<"0.6.0")
+.package(url: "https://github.com/pawelmajcher/SwiftyH3.git", "0.6.0"..<"0.7.0")
 ```
 
 ### Xcode
