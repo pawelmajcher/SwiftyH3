@@ -387,25 +387,27 @@ struct MultiPolygonTests {
 
         let h3multipolygon = try h3cells.multiPolygon
 
-        for (polygonIndex, polygon) in h3multipolygon.enumerated() {
-            for (boundaryPairIndex, boundaryPair) in polygon.boundary.enumerated() {
-                #expect(
-                    boundaryPair.latitudeDegs.isApproximatelyEqual(
-                        to: multiPolygon[polygonIndex][0][boundaryPairIndex][0]))
-                #expect(
-                    boundaryPair.longitudeDegs.isApproximatelyEqual(
-                        to: multiPolygon[polygonIndex][0][boundaryPairIndex][1]))
+        func isEqual(_ loop: H3Loop, to expected: [[Double]]) -> Bool {
+            guard loop.count == expected.count else { return false }
+            guard !loop.isEmpty else { return true }
+
+            return expected.indices.contains { rotation in
+                loop.indices.allSatisfy { index in
+                    let expectedPair = expected[(index + rotation) % expected.count]
+                    return loop[index].latitudeDegs.isApproximatelyEqual(to: expectedPair[0])
+                        && loop[index].longitudeDegs.isApproximatelyEqual(to: expectedPair[1])
+                }
             }
+        }
+
+        #expect(h3multipolygon.count == multiPolygon.count)
+
+        for (polygonIndex, polygon) in h3multipolygon.enumerated() {
+            #expect(polygon.holes.count + 1 == multiPolygon[polygonIndex].count)
+            #expect(isEqual(polygon.boundary, to: multiPolygon[polygonIndex][0]))
 
             for (holeIndex, hole) in polygon.holes.enumerated() {
-                for (holePairIndex, holePair) in hole.enumerated() {
-                    #expect(
-                        holePair.latitudeDegs.isApproximatelyEqual(
-                            to: multiPolygon[polygonIndex][holeIndex + 1][holePairIndex][0]))
-                    #expect(
-                        holePair.longitudeDegs.isApproximatelyEqual(
-                            to: multiPolygon[polygonIndex][holeIndex + 1][holePairIndex][1]))
-                }
+                #expect(isEqual(hole, to: multiPolygon[polygonIndex][holeIndex + 1]))
             }
         }
     }
