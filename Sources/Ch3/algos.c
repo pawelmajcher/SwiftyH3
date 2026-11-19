@@ -36,6 +36,7 @@
 #include "h3api.h"
 #include "latLng.h"
 #include "linkedGeo.h"
+#include "mathExtensions.h"
 #include "polygon.h"
 
 /*
@@ -366,6 +367,13 @@ H3Error H3_EXPORT(maxGridRingSize)(int k, int64_t *out) {
  * @return 0 if successful; nonzero otherwise.
  */
 H3Error H3_EXPORT(gridRing)(H3Index origin, int k, H3Index *out) {
+    // Validate k and size the wipe below in int64_t before touching out: with
+    // a negative k, 6 * k became a size_t of about 1.8e19 in the memset.
+    int64_t ringSize;
+    H3Error sizeError = H3_EXPORT(maxGridRingSize)(k, &ringSize);
+    if (sizeError) {
+        return sizeError;
+    }
     // Optimistically try the faster gridDiskUnsafe algorithm first
     const H3Error failed = H3_EXPORT(gridRingUnsafe)(origin, k, out);
     if (!failed) {
@@ -373,7 +381,7 @@ H3Error H3_EXPORT(gridRing)(H3Index origin, int k, H3Index *out) {
     }
     // Fast algo failed, fall back to slower, correct algo
     // and also wipe out array because contents untrustworthy
-    memset(out, 0, 6 * k * sizeof(H3Index));
+    memset(out, 0, ringSize * sizeof(H3Index));
     return _gridRingInternal(origin, k, out);
 }
 
@@ -558,7 +566,8 @@ H3Error h3NeighborRotations(H3Index origin, Direction dir, int *rotations,
                     current = _h3Rotate60cw(current);
                     *rotations = *rotations + 5;
                 } else {
-                    // TODO: Should never occur, but is reachable by fuzzer
+                    // Could occur on invalid inputs that were already within
+                    // the deleted k subsequence
                     return E_FAILED;
                 }
             }
@@ -703,7 +712,6 @@ H3Error H3_EXPORT(gridDiskDistancesUnsafe)(H3Index origin, int k, H3Index *out,
             if (neighborResult) {
                 // Should not be possible because `origin` would have to be a
                 // pentagon
-                // TODO: Reachable via fuzzer
                 return neighborResult;
             }
 
@@ -811,7 +819,6 @@ H3Error H3_EXPORT(gridRingUnsafe)(H3Index origin, int k, H3Index *out) {
         if (neighborResult) {
             // Should not be possible because `origin` would have to be a
             // pentagon
-            // TODO: Reachable via fuzzer
             return neighborResult;
         }
 
@@ -832,7 +839,6 @@ H3Error H3_EXPORT(gridRingUnsafe)(H3Index origin, int k, H3Index *out) {
             if (neighborResult) {
                 // Should not be possible because `origin` would have to be a
                 // pentagon
-                // TODO: Reachable via fuzzer
                 return neighborResult;
             }
 
@@ -889,8 +895,11 @@ H3Error H3_EXPORT(maxPolygonToCellsSize)(const GeoPolygon *geoPolygon, int res,
     // This algorithm assumes that the number of vertices is usually less than
     // the number of hexagons, but when it's wrong, this will keep it from
     // failing
-    int totalVerts = geoloop.numVerts;
+    int64_t totalVerts = geoloop.numVerts;
     for (int i = 0; i < geoPolygon->numHoles; i++) {
+        if (ADD_INT64S_OVERFLOWS(totalVerts, geoPolygon->holes[i].numVerts)) {
+            return E_MEMORY_ALLOC;
+        }
         totalVerts += geoPolygon->holes[i].numVerts;
     }
     if (numHexagons < totalVerts) numHexagons = totalVerts;
@@ -898,6 +907,9 @@ H3Error H3_EXPORT(maxPolygonToCellsSize)(const GeoPolygon *geoPolygon, int res,
     // resolution, the line tracing needs an extra buffer than the estimator
     // function provides (but beefing that up to cover causes most situations to
     // overallocate memory)
+    if (ADD_INT64S_OVERFLOWS(numHexagons, POLYGON_TO_CELLS_BUFFER)) {
+        return E_MEMORY_ALLOC;
+    }
     numHexagons += POLYGON_TO_CELLS_BUFFER;
     *out = numHexagons;
     return E_SUCCESS;
@@ -1054,7 +1066,6 @@ H3Error H3_EXPORT(polygonToCells)(const GeoPolygon *geoPolygon, int res,
                                             &numSearchHexes, search, found);
     // If this branch is reached, we have exceeded the maximum number of
     // hexagons possible and need to clean up the allocated memory.
-    // TODO: Reachable via fuzzer
     if (edgeHexError) {
         H3_MEMORY(free)(search);
         H3_MEMORY(free)(found);
@@ -1073,7 +1084,6 @@ H3Error H3_EXPORT(polygonToCells)(const GeoPolygon *geoPolygon, int res,
                                         search, found);
         // If this branch is reached, we have exceeded the maximum number of
         // hexagons possible and need to clean up the allocated memory.
-        // TODO: Reachable via fuzzer
         if (edgeHexError) {
             H3_MEMORY(free)(search);
             H3_MEMORY(free)(found);
@@ -1113,7 +1123,6 @@ H3Error H3_EXPORT(polygonToCells)(const GeoPolygon *geoPolygon, int res,
                     // If this branch is reached, we have exceeded the maximum
                     // number of hexagons possible and need to clean up the
                     // allocated memory.
-                    // TODO: Reachable via fuzzer
                     if (loopCount > numHexagons) {
                         H3_MEMORY(free)(search);
                         H3_MEMORY(free)(found);
