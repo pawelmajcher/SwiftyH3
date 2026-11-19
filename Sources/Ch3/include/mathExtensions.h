@@ -20,13 +20,34 @@
 #ifndef MATHEXTENSIONS_H
 #define MATHEXTENSIONS_H
 
+#include <float.h>
 #include <stdbool.h>
 #include <stdint.h>
+
+#if (FLT_EVAL_METHOD != 0) && (FLT_EVAL_METHOD != 1) && \
+    !defined(H3_SKIP_FLT_EVAL_METHOD_CHECK)
+/*
+ * FLT_EVAL_METHOD of 0 or 1 are compatible with H3, because 0 uses the width of
+ * the float or double type, and 1 uses the width of the double type (which is
+ * fine because as a general rule H3 uses doubles.) 2 indicates extended
+ * precision and is not recommended because some behavior in our test suite is
+ * not compatible with it. -1 indicates indeterminate.
+ *
+ * For a lot of cases, overriding this check and using extended precision will
+ * in fact work. However, edge cases are not tested and could have issues.
+ */
+#error H3 being compiled with FLT_EVAL_METHOD != 0 or 1 (i.e. extended precision double math) is not recommended.
+#endif
 
 /**
  * MAX returns the maximum of two values.
  */
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+/**
+ * MIN returns the minimum of two values.
+ */
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
 
 /** Evaluates to true if a + b would overflow for int32 */
 static inline bool ADD_INT32S_OVERFLOWS(int32_t a, int32_t b) {
@@ -34,6 +55,15 @@ static inline bool ADD_INT32S_OVERFLOWS(int32_t a, int32_t b) {
         return INT32_MAX - a < b;
     } else {
         return INT32_MIN - a > b;
+    }
+}
+
+/** Evaluates to true if a + b would overflow for int64 */
+static inline bool ADD_INT64S_OVERFLOWS(int64_t a, int64_t b) {
+    if (a > 0) {
+        return INT64_MAX - a < b;
+    } else {
+        return INT64_MIN - a > b;
     }
 }
 
